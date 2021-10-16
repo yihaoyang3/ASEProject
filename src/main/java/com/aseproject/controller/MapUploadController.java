@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 @Controller
 public class MapUploadController
@@ -33,7 +32,6 @@ public class MapUploadController
         {
             File f = File.createTempFile(s[0], s[1]);
             mapImage.transferTo(f);
-//            MapTool tool = new MapTool();
             BufferedImage[][] splitMap = MapTool.cutImage(ImageIO.read(f));
             int row = splitMap.length;
             int col = splitMap[0].length;
