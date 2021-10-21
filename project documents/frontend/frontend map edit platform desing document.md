@@ -11,7 +11,7 @@ As the image below, the user interface should look like:
 <span id="prototypeImage"></span>
 ![frontend interface 1.0](https://raw.githubusercontent.com/yihaoyang3/image-rep/main/Front%20End%20Prototype.drawio.png)
 
-### Components to be Implemented
+### Components to be Implemented 
 When user enter the map edit platform, the load order of components should be:
 1. Loading map blocks;
 2. Loading location items and display them in the location list. If location list is null, then display a message 
