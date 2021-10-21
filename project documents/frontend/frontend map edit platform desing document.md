@@ -9,7 +9,7 @@ However, the style design must be based on Bootstrap 4.
 As the image below, the user interface should look like:
 
 <span id="prototypeImage"></span>
-![frontend interface 1.0](https://raw.githubusercontent.com/yihaoyang3/image-rep/main/Front%20End%20Prototype1.0.1.png)
+![frontend interface 1.0](https://raw.githubusercontent.com/yihaoyang3/image-rep/main/Front%20End%20Prototype.drawio.png)
 
 ### Components to be Implemented
 When user enter the map edit platform, the load order of components should be:
@@ -63,15 +63,14 @@ The backend server will also return a json object array that including all locat
 ~~~
 [
     {
-        'locationId':string
-        'locationName':string
-        'locationDescription':string
+        'locationId':string，
+        'locationName':string，
     },
     ...
 ]
 ~~~
 
-The location list should show preview of all the location items inside the list. The preview only display the location name and description. The locationId is invisible for user, but should be accessible for program since other components will use locationId to request more information. 
+The location list should show preview of all the location items inside the list. The preview only display the location name. The locationId is invisible for user, but should be accessible for program since other components will use locationId to request more information. 
 
 #### 3. Location Items
 A popup window appear at then center of the browser while a user clicks the location item in the list. The location name, description, medias should be displayed inside this window. 
@@ -88,7 +87,6 @@ The json data format returned from would like:
         locationCoordinateY: , 
         //X and Y represent the coordinate of the location in the map blocks.
         locationName: ,
-        locationDescription: ,
         //description medias is an object arrays. It may include several objects.
         locationDescriptionMedia: [
             {
