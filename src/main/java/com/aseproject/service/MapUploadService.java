@@ -24,20 +24,15 @@ public class MapUploadService
         MapCutter.setTotalRow(totalRow);
         MapCutter.setCounter(new Counter());
         MapCutter.setQueue(new LinkedBlockingQueue<>());
-        /*MapCutter m = new MapCutter();
+        MapCutter m = new MapCutter();
         Thread mapCutter = new Thread(m);
-        mapCutter.start();*/
-        for (int i = 0; i < 3; i++)
-        {
-            Thread cutter = new Thread(new MapCutter());
-            cutter.start();
-        }
+        mapCutter.start();
 
         MapConvertor.reset();
         MapConvertor.initReceiveQueue(MapCutter.getQueue());
         MapConvertor.initBase64Block(totalRow, totalCol);
 
-        Thread[] mapConvertors = new Thread[30];
+        Thread[] mapConvertors = new Thread[8];
         for (int i = 0; i < mapConvertors.length; i++)
         {
             mapConvertors[i] = new Thread(new MapConvertor());
