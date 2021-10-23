@@ -2,20 +2,35 @@ This document will only list the required functions like type of the returned va
 ## Project Structure
 The basic structure of the project is:
 **ASEProject**
+
 |--src
+
 &emsp;|--main
+
 &emsp;&emsp;|--java
+
 &emsp;&emsp;&emsp;&emsp;|--com.aseproject
+
 &emsp;&emsp;&emsp;&emsp;&emsp;|--controller
+
 &emsp;&emsp;&emsp;&emsp;&emsp;|--service
+
 &emsp;&emsp;&emsp;&emsp;&emsp;|--domain
+
 &emsp;&emsp;&emsp;&emsp;&emsp;|--dao
+
 &emsp;&emsp;&emsp;&emsp;&emsp;|--(others packages)
+
 &emsp;&emsp;|--resource
+
 &emsp;&emsp;&emsp;|--static
+
 &emsp;&emsp;&emsp;&emsp;|--css
+
 &emsp;&emsp;&emsp;&emsp;|--js
+
 &emsp;&emsp;&emsp;&emsp;|--templates(html or template like thymeleaf)
+
 &emsp;|--test
 The backend developer should follow MVC pattern.
 **Unfinished**

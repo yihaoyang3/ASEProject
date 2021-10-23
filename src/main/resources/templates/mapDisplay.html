@@ -11,7 +11,7 @@
 <div style="width: 100%" >
     <div th:each="row:${mapBlocks}" style="display: flex; flex-wrap: nowrap">
         <div th:each="col:${row}">
-            <img name="map-block" th:src="'data:image/jpeg;base64,'+${col}">
+            <img style="height: 30px; width: 30px" name="map-block" th:src="'data:image/jpeg;base64,'+${col}">
 <!--            <div th:text="${col}"></div>-->
         </div>
     </div>
