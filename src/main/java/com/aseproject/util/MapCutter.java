@@ -5,6 +5,12 @@ import java.awt.image.RasterFormatException;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * The MapCutter is used to split an image into several pieces. It implements the Runnable interface to create multi
+ * thread to increase performance
+ *
+ * @author Yihao Yang
+ */
 public class MapCutter implements Runnable
 {
     private static BufferedImage originalMap;
@@ -23,13 +29,25 @@ public class MapCutter implements Runnable
         {
             x = counter.getCountX();
             y = counter.getCountY();
+            if (y == totalCol - 1)
+            {
+                counter.setCountX(x + 1);
+                counter.setCountY(0);
+            } else
+            {
+                counter.setCountY(y + 1);
+            }
+        }
+        if (x == totalRow )
+        {
+            return null;
         }
         BufferedImage i = null;
         try
         {
-             i = originalMap.getSubimage(y * MapCutter.widthPerBlock, x * MapCutter.heightPerBlock,
+            i = originalMap.getSubimage(y * MapCutter.widthPerBlock, x * MapCutter.heightPerBlock,
                     MapCutter.widthPerBlock, MapCutter.heightPerBlock);
-        }catch (RasterFormatException e)
+        } catch (RasterFormatException e)
         {
             System.out.println(x + " " + y);
             throw e;
@@ -37,13 +55,8 @@ public class MapCutter implements Runnable
         block.setBlock(i);
         block.setX(x);
         block.setY(y);
-//        System.out.println("Put :" + x + ", " + y + "into receive queue");
-        if (x == totalRow - 1 && y == totalCol)
-        {
-//            Thread.currentThread().interrupt();
-            return null;
-        }
-        synchronized (counter)
+        return block;
+        /*synchronized (counter)
         {
             if (y == totalCol - 1)
             {
@@ -54,7 +67,7 @@ public class MapCutter implements Runnable
                 counter.setCountY(y + 1);
             }
             return block;
-        }
+        }*/
     }
 
     @Override

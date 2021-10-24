@@ -47,7 +47,6 @@ public class MapConvertor implements Runnable
             {
                 block = receiveQueue.poll(1, TimeUnit.SECONDS);
                 if (block == null) break;
-//                System.out.println("receive :" + block.getX() + ", " + block.getY() + "into receive queue");
                 block = mapToBase64(block);
                 base64MapBlock[block.getX()][block.getY()] = block.getStringBlock();
             } catch (InterruptedException e)
