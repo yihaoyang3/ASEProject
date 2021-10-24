@@ -1,5 +1,6 @@
 package com.aseproject.controller;
 
+import com.aseproject.service.MapStorageInfoService;
 import com.aseproject.service.MapUploadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ public class MapUploadController
     }
 
     @RequestMapping("/upload")
-    public String uploadMap(@RequestParam("map") MultipartFile mapImage, Model model)
+    public String uploadMap(@RequestParam("map") MultipartFile mapImage, Model model) throws IOException
     {
         String originalName = mapImage.getOriginalFilename();
         String[] s = originalName.split("\\.");
@@ -41,6 +42,10 @@ public class MapUploadController
         {
             e.printStackTrace();
         }
+
+        MapStorageInfoService service = new MapStorageInfoService();
+        service.storeMapInLocal(mapBlock);
+
         model.addAttribute("mapBlocks", mapBlock);
         return "/mapDisplay";
     }

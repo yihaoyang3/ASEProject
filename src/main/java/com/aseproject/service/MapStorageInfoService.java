@@ -1,12 +1,11 @@
 package com.aseproject.service;
 
 
+import com.aseproject.domain.MapStorageInfo;
 import com.google.gson.Gson;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 class mapwithcoordinates{
     public int coordinates[];
@@ -41,5 +40,8 @@ public class MapStorageInfoService {
         OutputStream os = new FileOutputStream(file);
         os.write(b,0,l);
         os.close();
+
     }
+
+
 }
