@@ -1,71 +1,69 @@
 package com.aseproject.domain;
 
-public class LocationInfo
-{
-	  private  String locationId;
-	  private  String mapId;
-	  private  String locationName;
-	  private  String locationDescriptionFileName;
-	  private  String locationDescriptionFilePath;
-	  private  int locationCoordinateX;
-	  private  int locationCoordinateY;
-	  
-	  public void setlocationId(String loc)
-	  {
-		locationId = loc;  
-	  }
-	  public String getlocationId()
-	  {
-		  return locationId;
-	  }
-	  public void setmapId(String id)
-	  {
-		  mapId = id;
-	  }
-	  public String getmapId()
-	  {
-		  return mapId;
-	  }
-	  public void setlocationName(String name)
-	  {
-		  locationName = name;
-	  }
-	  public String getlocationName()
-	  {
-		  return locationName;
-	  }
-	  public void setlocationdescriptionfileName(String file)
-	  {
-		  locationDescriptionFileName = file;
-	  }
-	  public String getlocationdescriptionfileName()
-	  {
-		  return locationDescriptionFileName;
-	  }
-	  public void setlocationdescriptionfilepath(String path)
-	  {
-		  locationDescriptionFilePath = path;
-	  }
-	  public String getlocationdescriptionfilepath()
-	  {
-		  return locationDescriptionFilePath;
-	  }
-	  public void setlocationcoordinateX(int x)
-	  {
-		  locationCoordinateX = x;
-	  }
-	  public void setlocationCoordinateY(int y)
-	  {
-		  locationCoordinateY = y;
-	  }
-	  public int getlocationcoordinateX()
-	  {
-		  return locationCoordinateX;
-	  }
-	  public int getlocationCoordinateY()
-	  {
-		  return locationCoordinateY;
-	  }
-	  
-	  
+public class LocationInfo {
+    private String locationId;
+    private String mapId;
+    private String locationName;
+    private String locationDescriptionFileName;
+    private String locationDescriptionFilePath;
+    private int locationCoordinateX;
+    private int locationCoordinateY;
+
+    public LocationInfo() {
+        super();
+    }
+
+    public String getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
+
+    public String getMapId() {
+        return mapId;
+    }
+
+    public void setMapId(String mapId) {
+        this.mapId = mapId;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public String getLocationDescriptionFileName() {
+        return locationDescriptionFileName;
+    }
+    public void setLocationDescriptionFileName(String locationDescriptionFileName){
+        this.locationDescriptionFileName = locationDescriptionFileName;
+    }
+
+    public String getLocationDescriptionFilePath(){
+        return locationDescriptionFilePath;
+    }
+    public void setLocationDescriptionFilePath(String locationDescriptionFilePath){
+        this.locationDescriptionFilePath = locationDescriptionFilePath;
+    }
+
+    public int getLocationCoordinateX(){
+        return locationCoordinateX;
+    }
+    public void setLocationCoordinateX(int locationCoordinateX){
+        this.locationCoordinateX = locationCoordinateX;
+    }
+
+    public int getLocationCoordinateY(){
+        return locationCoordinateY;
+    }
+    public void setLocationCoordinateY(int locationCoordinateY){
+        this.locationCoordinateY = locationCoordinateY;
+    }
+
 }
+
