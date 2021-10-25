@@ -1,33 +1,34 @@
 package com.aseproject.domain;
 
-public class MapStorageInfo //JavaBean
+public class MapStorageInfo
 {
-    private String mapId;
-    private String mapStorageName;
-    private String mapStoragePath;
-
-    public MapStorageInfo(){
-        super();
-    }
-
-    public String getMapId(){
-        return mapId;
-    }
-    public void setMapId(String mapId){
-        this.mapId = mapId;
-    }
-
-    public String getMapStorageName(){
-        return mapStorageName;
-    }
-    public void setMapStorageName(String mapStorageName){
-        this.mapStorageName = mapStorageName;
-    }
-
-    public String getMapStoragePath(){
-        return mapStoragePath;
-    }
-    public void setMapStoragePath(String mapStoragePath){
-        this.mapStoragePath = mapStoragePath;
-    }
+	 private String mapId;
+	 private String mapStorageName;
+	 private String mapStoragePath;
+	 
+	
+	public void setmapId(String id)
+	 {
+		 mapId = id;
+	 }
+	 public void setmapstorageName(String name)
+	 {
+		 mapStorageName = name;
+	 }
+	 public void setmapstoragePath(String path)
+	 {
+		 mapStoragePath = path;
+	 }
+	 public String getmapId()
+	 {
+		 return mapId;
+	 }
+	 public String getmapstorageName()
+	 {
+		 return mapStorageName;
+	 }
+	 public String getmapstoragePath()
+	 {
+		 return mapStoragePath;
+	 }
 }
