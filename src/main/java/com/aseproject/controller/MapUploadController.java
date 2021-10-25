@@ -24,7 +24,7 @@ public class MapUploadController
     }
 
     @RequestMapping("/upload")
-    public String uploadMap(@RequestParam("map") MultipartFile mapImage, Model model) throws IOException
+    public String uploadMap(@RequestParam("map") MultipartFile mapImage, Model model)
     {
         String originalName = mapImage.getOriginalFilename();
         String[] s = originalName.split("\\.");
