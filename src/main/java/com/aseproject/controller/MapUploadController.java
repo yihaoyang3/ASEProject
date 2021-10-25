@@ -1,7 +1,10 @@
 package com.aseproject.controller;
 
+import com.aseproject.dao.LocationInfoDao;
+import com.aseproject.domain.LocationInfo;
 import com.aseproject.service.MapStorageInfoService;
 import com.aseproject.service.MapUploadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import javax.xml.stream.Location;
 import java.io.File;
 import java.io.IOException;
 
@@ -48,5 +52,22 @@ public class MapUploadController
 
         model.addAttribute("mapBlocks", mapBlock);
         return "/mapDisplay";
+    }
+
+
+    //test
+    @Autowired
+    private LocationInfoDao dao;
+
+    @RequestMapping("/test")
+    public void test(){
+        LocationInfo locationInfo = new LocationInfo();
+        locationInfo.setLocationId("123");
+        locationInfo.setMapId("234");
+        locationInfo.setLocationName("4565");
+        locationInfo.setLocationDescriptionFileName("fshad");
+        locationInfo.setLocationDescriptionFilePath("/Users/yangjitong/Desktop");
+        locationInfo.setLocationCoordinateX(2);
+        locationInfo.setLocationCoordinateY(3);
     }
 }
