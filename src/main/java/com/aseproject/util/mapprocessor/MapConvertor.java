@@ -1,7 +1,6 @@
-package com.aseproject.util;
+package com.aseproject.util.mapprocessor;
 
 import javax.imageio.ImageIO;
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
