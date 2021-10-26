@@ -18,7 +18,7 @@ public class LocationInfoDao {
     }
 
     public void deleteLocationInfoById(String locationId){
-        String sql = "delete from location_info where location_id = ?";
+        String sql = "delete from localtion_info where location_id = ?";
         jdbcTemplate.update(sql, locationId);
     }
 }
