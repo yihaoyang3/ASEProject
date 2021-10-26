@@ -9,16 +9,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import javax.print.DocFlavor;
 import javax.xml.stream.Location;
 import java.io.File;
 import java.io.IOException;
 
-@Controller
+@RestController
 public class MapUploadController
 {
+
+    @Autowired
+    private LocationInfoDao locationInfoDao;
+
     private MapUploadService mapUploadService = new MapUploadService();
 
     @RequestMapping("/")
@@ -55,19 +62,30 @@ public class MapUploadController
     }
 
 
-    //test
-    @Autowired
-    private LocationInfoDao dao;
-
-    @RequestMapping("/test")
-    public void test(){
+    //test-add
+    @RequestMapping("/addlocation")
+    public void addLocationTest(){
         LocationInfo locationInfo = new LocationInfo();
-        locationInfo.setLocationId("123");
-        locationInfo.setMapId("234");
+        locationInfo.setLocationId("14");
+        locationInfo.setMapId("12");
         locationInfo.setLocationName("4565");
         locationInfo.setLocationDescriptionFileName("fshad");
         locationInfo.setLocationDescriptionFilePath("/Users/yangjitong/Desktop");
         locationInfo.setLocationCoordinateX(2);
         locationInfo.setLocationCoordinateY(3);
+
+        locationInfoDao.addLocationInfoById(locationInfo);
+
+//        return "";
+    }
+
+    //test-delete
+    @RequestMapping("/deletelocation")
+    public void deleteLocationTest(){
+       String locationId = "9";
+
+       locationInfoDao.deleteLocationInfoById(locationId);
+
+
     }
 }
