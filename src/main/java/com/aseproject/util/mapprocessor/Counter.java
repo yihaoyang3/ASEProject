@@ -1,4 +1,4 @@
-package com.aseproject.util;
+package com.aseproject.util.mapprocessor;
 
 public class Counter
 {
