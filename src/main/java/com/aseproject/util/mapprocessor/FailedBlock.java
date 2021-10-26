@@ -2,8 +2,6 @@ package com.aseproject.util.mapprocessor;
 
 public class FailedBlock
 {
-
-
     private int x,y;
 
     public FailedBlock(int x, int y)
