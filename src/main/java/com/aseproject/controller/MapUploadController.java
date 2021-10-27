@@ -66,7 +66,7 @@ public class MapUploadController
     @RequestMapping("/addlocation")
     public void addLocationTest(){
         LocationInfo locationInfo = new LocationInfo();
-        locationInfo.setLocationId("14");
+        locationInfo.setLocationId("18");
         locationInfo.setMapId("12");
         locationInfo.setLocationName("4565");
         locationInfo.setLocationDescriptionFileName("fshad");
@@ -82,7 +82,7 @@ public class MapUploadController
     //test-delete
     @RequestMapping("/deletelocation")
     public void deleteLocationTest(){
-       String locationId = "9";
+       String locationId = "10";
 
        locationInfoDao.deleteLocationInfoById(locationId);
 

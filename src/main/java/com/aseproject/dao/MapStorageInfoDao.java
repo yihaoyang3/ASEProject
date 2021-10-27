@@ -22,7 +22,7 @@ public class MapStorageInfoDao {
 ////    }
 
     public void deleteMap(String mapId){
-        String sql = "delete from map_sotrage_info whrer map_id = ?";
+        String sql = "delete from map_sotrage_info where map_id = ?";
         jdbcTemplate.update(sql, mapId);
     }
 
