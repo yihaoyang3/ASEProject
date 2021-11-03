@@ -1,6 +1,4 @@
 package com.aseproject.service;
-
-
 import com.aseproject.domain.MapStorageInfo;
 import com.aseproject.domain.Mapwithcoordinates;
 import com.google.gson.Gson;
@@ -49,8 +47,17 @@ public class MapStorageInfoService {
         }
     }
 
+    public void addMap(MapStorageInfo info) throws IOException {
+        byte[] std;
+        ByteArrayOutputStream byt = new ByteArrayOutputStream();
+        ObjectOutputStream obj = new ObjectOutputStream(byt);
+        obj.writeObject(info);
+        std=byt.toByteArray();
 
-    /*public String readMapFromLocal(MapStorageInfo storageInfo) throws IOException {
+        JdbcTemplate jdbcTemplate = new Jdbctemplate
+    }
+    
+    public String readMapFromLocal(MapStorageInfo storageInfo) throws IOException {
         File file = new File("mapwithcoordinates"); //filepath
         if(file.exists()) {
             InputStream input = new FileInputStream(file);
@@ -63,14 +70,6 @@ public class MapStorageInfoService {
         return null;
     }
 
-    public void addMap(MapStorageInfo info) throws IOException {
-        byte[] std;
-        ByteArrayOutputStream byt = new ByteArrayOutputStream();
-        ObjectOutputStream obj = new ObjectOutputStream(byt);
-        obj.writeObject(info);
-        std=byt.toByteArray();
 
-        JdbcTemplate jdbcTemplate = new Jdbctemplate
-    }*/
 
 }
