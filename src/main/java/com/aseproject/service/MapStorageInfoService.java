@@ -1,15 +1,12 @@
 package com.aseproject.service;
 
-
-import com.aseproject.domain.MapStorageInfo;
 import com.aseproject.domain.Mapwithcoordinates;
 import com.google.gson.Gson;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 
-
-
+@Service
 public class MapStorageInfoService {
     public void storeMapInLocal(String[][] mapBlock)  {
         try {
