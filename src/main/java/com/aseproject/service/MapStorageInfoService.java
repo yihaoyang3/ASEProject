@@ -28,7 +28,7 @@ public class MapStorageInfoService {
             String str = "C:\\Users\\79989\\OneDrive\\桌面\\1\\1.txt";
             File file = new File(str);
 
-           if (!file.exists()) {
+            if (!file.exists()) {
                 file.createNewFile();
             }
 
@@ -59,15 +59,74 @@ public class MapStorageInfoService {
         }
         return null;
     }
-
     public void addMap(MapStorageInfo info) throws IOException {
         byte[] std;
         ByteArrayOutputStream byt = new ByteArrayOutputStream();
         ObjectOutputStream obj = new ObjectOutputStream(byt);
         obj.writeObject(info);
         std=byt.toByteArray();
-
         JdbcTemplate jdbcTemplate = new Jdbctemplate
     }*/
 
+
+    //read map from location
+    public static void processJsonData(ArrayList objectArray, String data, String [][] macthedData) {
+        int coordinateX = ((Long) objectArray.get(0)).intValue();
+        int coordinateY = ((Long) objectArray.get(1)).intValue();
+
+        macthedData[coordinateX][coordinateY] = data;
+    }
+
+
+
+    public static String[][] readMapFromLocal(String filePath) {
+        String [][] macthedData = new String[0][];
+
+        try {
+            JSONParser parser = new JSONParser();
+            JSONArray array = (JSONArray) parser.parse(new FileReader(filePath));
+            Object lastObject = array.get(array.size() - 1);
+            JSONObject lastJsonObject = (JSONObject) lastObject;
+            JSONArray lastCoordinatesArray = (JSONArray) lastJsonObject.get("coordinates");
+            ArrayList lastObjectArray = new ArrayList();
+            for (Object o : lastCoordinatesArray) {
+                lastObjectArray.add(o);
+            }
+            int lastCoordinateX = ((Long) lastObjectArray.get(0)).intValue() + 1;
+            int lastCoordinateY = ((Long) lastObjectArray.get(1)).intValue() + 1;
+
+            macthedData = new String[lastCoordinateX][lastCoordinateY];
+
+            for (Object o1 : array) {
+                JSONObject jo = (JSONObject) o1;
+                JSONArray coordinatesArray = (JSONArray) jo.get("coordinates");
+//                JSONObject jo2 = (JSONObject) o1;
+                String data = (String) jo.get("data");
+//                System.out.print(coordinatesArray + " " + data);
+                ArrayList objectArray = new ArrayList();
+                for (Object o2 : coordinatesArray) {
+                    objectArray.add(o2);
+                }
+
+//                System.out.print(objectArray + " ");
+
+                processJsonData(objectArray, data, macthedData);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return macthedData;
+
+    }
+
+
+
+    public static void main(String[] args) {
+
+        String filePath = "/Users/Desktop/Data.json";
+        String[][] ss = readMapFromLocal(filePath);
+        System.out.print(new Gson().toJson(ss[88][66])); // test with coordinates [x][y]
+
+    }
 }
