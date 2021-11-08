@@ -5,6 +5,7 @@ import com.aseproject.domain.MapStorageInfo;
 import com.aseproject.domain.Mapwithcoordinates;
 import com.google.gson.Gson;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 
