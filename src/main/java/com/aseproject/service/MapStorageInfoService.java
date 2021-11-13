@@ -1,19 +1,33 @@
+   
 package com.aseproject.service;
 
+
+import com.aseproject.domain.MapStorageInfo;
 import com.aseproject.domain.Mapwithcoordinates;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
+@Component
 @Service
 public class MapStorageInfoService {
+    
+    @Value("${project.map.path}")
+    private String mappath;
+    
     public void storeMapInLocal(String[][] mapBlock)  {
         try {
             Gson gson = new Gson();
             int row = mapBlock.length;
             int col = mapBlock[0].length;
             int len = row * col;
+            int number =0;
             Mapwithcoordinates[] newc = new Mapwithcoordinates[len];
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < col; j++) {
@@ -21,28 +35,40 @@ public class MapStorageInfoService {
                     c.coordinates[0] = i;
                     c.coordinates[1] = j;
                     c.data = mapBlock[i][j];
-                    newc[i] = c;
+                    newc[number++] = c;
                 }
             }
             String json = gson.toJson(newc);
-            String str = "C:\\Users\\79989\\OneDrive\\桌面\\1\\1.txt";
-            File file = new File(str);
+           
+            File file = new File(mappath);
 
+            BufferedWriter writer = null;
+            Date date = new Date();
+          
+            File file = new File(mappath);
             if (!file.exists()) {
-                file.createNewFile();
+
+                 file.mkdirs();
             }
+            UUID uuid = UUID.randomUUID();
+            String uuidAsString = uuid.toString();
+            String fileName = uuid + ".json";
+            File file1 = new File(mappath+fileName);
+            file1.createNewFile();
 
-            String j = json.toString();
-            byte[] b = j.getBytes();
-            int l = j.length();
-            OutputStream os = new FileOutputStream(file);
-            os.write(b, 0, l);
+            MapStorageInfo info = new MapStorageInfo();
+            info.setMapId(uuidAsString);
+            info.setMapStoragePath(mappath+fileName);
+            info.setMapStorageName(fileName);
 
-            os.close();
+           
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1, false), "UTF-8"));
+            writer.write(json);
+            writer.flush();
+            writer.close();
         }
-        catch (IOException exception)
-        {
-            exception.printStackTrace();
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
