@@ -2,21 +2,25 @@
 package com.aseproject.service;
 
 
+import com.aseproject.dao.MapStorageInfoDao;
 import com.aseproject.domain.MapStorageInfo;
 import com.aseproject.domain.Mapwithcoordinates;
 import com.google.gson.Gson;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
-@Component
 @Service
 public class MapStorageInfoService {
+
+    @Autowired
+    private MapStorageInfoDao dao;
     
     @Value("${project.map.path}")
     private String mappath;
@@ -39,12 +43,8 @@ public class MapStorageInfoService {
                 }
             }
             String json = gson.toJson(newc);
-           
-            File file = new File(mappath);
-
             BufferedWriter writer = null;
             Date date = new Date();
-          
             File file = new File(mappath);
             if (!file.exists()) {
 
@@ -61,39 +61,17 @@ public class MapStorageInfoService {
             info.setMapStoragePath(mappath+fileName);
             info.setMapStorageName(fileName);
 
-           
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1, false), "UTF-8"));
             writer.write(json);
             writer.flush();
             writer.close();
+
+            dao.addMap(info);
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
-    /*public String readMapFromLocal(MapStorageInfo storageInfo) throws IOException {
-        File file = new File("mapwithcoordinates"); //filepath
-        if(file.exists()) {
-            InputStream input = new FileInputStream(file);
-            byte data[] = new byte[1024];
-            input.read(data);
-            input.close();
-            String res = new String(data);
-            return res;
-        }
-        return null;
-    }
-    public void addMap(MapStorageInfo info) throws IOException {
-        byte[] std;
-        ByteArrayOutputStream byt = new ByteArrayOutputStream();
-        ObjectOutputStream obj = new ObjectOutputStream(byt);
-        obj.writeObject(info);
-        std=byt.toByteArray();
-        JdbcTemplate jdbcTemplate = new Jdbctemplate
-    }*/
-
 
     //read map from location
     public static void processJsonData(ArrayList objectArray, String data, String [][] macthedData) {
@@ -102,8 +80,6 @@ public class MapStorageInfoService {
 
         macthedData[coordinateX][coordinateY] = data;
     }
-
-
 
     public static String[][] readMapFromLocal(String filePath) {
         String [][] macthedData = new String[0][];
@@ -133,9 +109,7 @@ public class MapStorageInfoService {
                 for (Object o2 : coordinatesArray) {
                     objectArray.add(o2);
                 }
-
 //                System.out.print(objectArray + " ");
-
                 processJsonData(objectArray, data, macthedData);
             }
         } catch(Exception e) {
@@ -143,16 +117,10 @@ public class MapStorageInfoService {
         }
 
         return macthedData;
-
     }
 
-
-
-    public static void main(String[] args) {
-
-        String filePath = "/Users/Desktop/Data.json";
-        String[][] ss = readMapFromLocal(filePath);
-        System.out.print(new Gson().toJson(ss[88][66])); // test with coordinates [x][y]
-
+    public Map<String, LinkedList<String>> queryMapIdList()
+    {
+        return dao.queryMapIdList();
     }
 }

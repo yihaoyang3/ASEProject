@@ -14,25 +14,19 @@ public class MapConvertor implements Runnable
     private static String[][] base64MapBlock;
     private ByteArrayOutputStream baos;
     private static final LinkedList<FailedBlock> failureLog = new LinkedList<>();
-    private static boolean isDone;
+    private static Boolean isDone;
 
     public MapConvertor()
     {
         this.baos = new ByteArrayOutputStream();
+        isDone = false;
     }
 
-    public MapBlock mapToBase64(MapBlock block)
+    public MapBlock mapToBase64(MapBlock block) throws IOException
     {
-        try
-        {
-            ImageIO.write(block.getBlock(), "jpg", baos);
-            block.setStringBlock(Base64.getEncoder().encodeToString(baos.toByteArray()));
-            baos.reset();
-        } catch (IOException e)
-        {
-            failureLog.add(new FailedBlock(block.getX(), block.getY()));
-            e.printStackTrace();
-        }
+        ImageIO.write(block.getBlock(), "jpg", baos);
+        block.setStringBlock(Base64.getEncoder().encodeToString(baos.toByteArray()));
+        baos.reset();
         return block;
     }
 
@@ -45,15 +39,19 @@ public class MapConvertor implements Runnable
             try
             {
                 block = receiveQueue.poll(1, TimeUnit.SECONDS);
-                if (block == null) break;
+                if (block == null)
+                {
+                    baos.close();
+                    MapConvertor.isDone = true;
+                    return;
+                }
                 block = mapToBase64(block);
                 base64MapBlock[block.getX()][block.getY()] = block.getStringBlock();
-            } catch (InterruptedException e)
+            } catch (InterruptedException | IOException e)
             {
                 e.printStackTrace();
             }
         }
-        MapConvertor.isDone = true;
     }
 
     public static void initReceiveQueue(LinkedBlockingQueue<MapBlock> receiveQueue)
@@ -79,10 +77,11 @@ public class MapConvertor implements Runnable
         return base64MapBlock;
     }
 
-    public static void reset()
+    public static void resetAll()
     {
         receiveQueue = null;
         base64MapBlock = null;
+        isDone = null;
     }
 
     public static boolean isDone()

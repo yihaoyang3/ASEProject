@@ -2,6 +2,7 @@ package com.aseproject.controller;
 
 import com.aseproject.service.MapStorageInfoService;
 import com.aseproject.service.MapUploadService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Controller
-public class MapUploadController
+public class MapController
 {
     @Autowired
     private MapUploadService mapUploadService;
@@ -41,10 +42,7 @@ public class MapUploadController
             File f = File.createTempFile(s[0], s[1]);
             mapImage.transferTo(f);
             mapBlock = mapUploadService.processUploadedMap(ImageIO.read(f));
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        } catch (InterruptedException e)
+        } catch (IOException | InterruptedException e)
         {
             e.printStackTrace();
         }
@@ -53,5 +51,14 @@ public class MapUploadController
 
         model.addAttribute("mapBlocks", mapBlock);
         return "/mapDisplay";
+    }
+
+    @RequestMapping("/plazaHomepage")
+    public String requestMapList(Model model)
+    {
+        Gson gson = new Gson();
+        String mapIds = gson.toJson(mapStorageService.queryMapIdList());
+        model.addAttribute(mapIds);
+        return "";
     }
 }

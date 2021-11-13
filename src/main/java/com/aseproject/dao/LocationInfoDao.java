@@ -11,14 +11,14 @@ public class LocationInfoDao{
     JdbcTemplate jdbcTemplate;
 
     public void addLocationInfoById(LocationInfo locationInfo){
-        String sql = "insert into localtion_info(location_id, map_id, location_name, location_description_file_name, location_description_file_path, location_coordinate_x, location_coordinate_y) " +
+        String sql = "insert into location_info(location_id, map_id, location_name, location_description_file_name, location_description_file_path, location_coordinate_x, location_coordinate_y) " +
                 "values (?,?,?,?,?,?,?)";
         jdbcTemplate.update(sql, locationInfo.getLocationId(), locationInfo.getMapId(), locationInfo.getLocationName(), locationInfo.getLocationDescriptionFileName(),
                 locationInfo.getLocationDescriptionFilePath(), locationInfo.getLocationCoordinateX(), locationInfo.getLocationCoordinateY());
     }
 
     public void deleteLocationInfoById(String locationId){
-        String sql = "delete from localtion_info where location_id = ?";
+        String sql = "delete from location_info where location_id = ?";
         jdbcTemplate.update(sql, locationId);
     }
 }

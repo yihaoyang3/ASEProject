@@ -19,6 +19,7 @@ public class MapUploadService
         int totalRow = originalMap.getHeight() / 30;
         int totalCol = originalMap.getWidth() / 30;
 
+        MapCutter.resetAll();
         MapCutter.setOriginalMap(originalMap);
         MapCutter.setTotalCol(totalCol);
         MapCutter.setTotalRow(totalRow);
@@ -33,7 +34,7 @@ public class MapUploadService
             mapCutter.start();
         }
 
-        MapConvertor.reset();
+        MapConvertor.resetAll();
         MapConvertor.initReceiveQueue(MapCutter.getQueue());
         MapConvertor.initBase64Block(totalRow, totalCol);
 
