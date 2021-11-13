@@ -1,8 +1,8 @@
 package com.aseproject.service;
 
-import com.aseproject.util.Counter;
-import com.aseproject.util.MapConvertor;
-import com.aseproject.util.MapCutter;
+import com.aseproject.util.mapprocessor.Counter;
+import com.aseproject.util.mapprocessor.MapConvertor;
+import com.aseproject.util.mapprocessor.MapCutter;
 import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;

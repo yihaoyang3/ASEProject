@@ -2,6 +2,7 @@ package com.aseproject.controller;
 
 import com.aseproject.service.MapStorageInfoService;
 import com.aseproject.service.MapUploadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,13 +10,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+
 import java.io.File;
 import java.io.IOException;
 
 @Controller
 public class MapUploadController
 {
-    private MapUploadService mapUploadService = new MapUploadService();
+    @Autowired
+    private MapUploadService mapUploadService;
+
+    @Autowired
+    private MapStorageInfoService mapStorageService;
 
     @RequestMapping("/")
     public String welcome()
@@ -43,8 +49,7 @@ public class MapUploadController
             e.printStackTrace();
         }
 
-        MapStorageInfoService service = new MapStorageInfoService();
-        service.storeMapInLocal(mapBlock);
+        mapStorageService.storeMapInLocal(mapBlock);
 
         model.addAttribute("mapBlocks", mapBlock);
         return "/mapDisplay";

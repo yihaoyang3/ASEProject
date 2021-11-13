@@ -1,8 +1,7 @@
-package com.aseproject.util;
+package com.aseproject.util.mapprocessor;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
-import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
