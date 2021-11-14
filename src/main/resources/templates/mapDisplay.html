@@ -21,21 +21,13 @@
 
 <div class="visible-cover relative">
     <div style="width: 100%; height: auto; position: absolute; left: 0; top: 0; z-index: 0;" id="vis">
-        <div th:each="row:${mapBlocks}" style="display: flex; flex-wrap: nowrap">
-            <div th:each="col:${row}">
+        <div th:each="row:${mapBlocks}" style="display: flex; flex-wrap: nowrap;height: auto">
+            <div th:each="col:${row}" style="height: auto">
                 <img style="width: 100%; height: auto" th:src="'data:image/jpeg;base64,'+${col}" name="map-block" class="block" th:draggable="false">
             </div>
         </div>
     </div>
 </div>
-
-<!-- Test Content -->
-<!--<div class="visible-cover relative">-->
-<!--    <div style="width: 100%; height: 100%; position: absolute; left:0px; top: 0px; z-index: 0" id="test-div">-->
-<!--        <img style="width: 50%; height: 100%;" src="test-pic.jpg" class="pic" draggable="false">-->
-<!--        <img style="width: 50%; height: 100%;" src="test-pic.jpg" class="pic" draggable="false">-->
-<!--    </div>-->
-<!--</div>-->
 
 </body>
 <style type="text/css">
@@ -61,18 +53,6 @@
         this.style.borderWidth = "";
         this.style.borderColor = "";
     });
-
-    // // test JQuery
-    // $(document).ready(function() {
-    //     $("button#test-button").click(function() {
-    //         $("img.map-block").each(function () {
-    //             let new_width = $(this).width() * 1.1;
-    //             let new_height = $(this).height() * 1.1;
-    //             $(this).css({"width": new_width+"px", "height": new_height+"px"})
-    //             console.log("w" + new_width + " h" + new_height);
-    //         });
-    //     });
-    // });
 
     // zoom-in and zoom-out 
     function zoombig() {

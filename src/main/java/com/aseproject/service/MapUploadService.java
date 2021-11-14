@@ -38,7 +38,7 @@ public class MapUploadService
         MapConvertor.initReceiveQueue(MapCutter.getQueue());
         MapConvertor.initBase64Block(totalRow, totalCol);
 
-        Thread[] mapConvertors = new Thread[6];
+        Thread[] mapConvertors = new Thread[16];
         for (int i = 0; i < mapConvertors.length; i++)
         {
             mapConvertors[i] = new Thread(new MapConvertor());

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-4.3.1.min.css}">
+    <link rel="stylesheet" th:href="@{/css/project/mapbrowse.css}">
+
+</head>
+<body>
+<div class="buttoms">
+    <div style="position: absolute; right: 20px; bottom:20px; z-index: 999">
+        <button onclick="zoombig()">Zoom-In</button>
+        &nbsp;&nbsp;
+        <button onclick="zoomsmall()">Zoom-Out</button>
+        &nbsp;&nbsp;
+        <button onclick="getDefault()">Reset</button>
+    </div>
+</div>
+
+<div class="visible-cover relative">
+    <div class="drag-framework-inner" id="vis">
+        <div id="map-container" class="map-framework">
+
+        </div>
+    </div>
+</div>
+<label id="mapIdLabel" hidden="hidden" th:value="${mapId}"></label>
+</body>
+<script th:src="@{/js/jquery/jquery-3.3.1.js}"></script>
+<script th:src="@{/js/map/mapbrowse.js}"></script>
+
+<script>
+    $(function () {
+        let mapId = $("#mapIdLabel").attr("value");
+        $.ajax({
+            type: 'get',
+            url: '/map/browse/getMap?id=' + mapId,
+            success: function (data, status, jqXHR) {
+                data = JSON.parse(data);
+                let imgType = 'data:image/jpeg;base64,';
+                for (let i = 0; i < data.length; i++) {
+                    let rowId = '#row' + i;
+                    let rowDiv = '<div class="map-row" id="' + 'row' + i + '"></div>'
+                    $(rowDiv).appendTo("#map-container");
+                    for (let j = 0; j < data[i].length; j++) {
+                        let mapBlock = '<img name="map-block" class="block" draggable="false" src="' + imgType +
+                            data[i][j] +
+                            '">';
+                        $(mapBlock).appendTo(rowId);
+                    }
+                }
+            }
+        });
+    });
+
+    $("[name='map-block']").mouseover(function () {
+        this.style.borderStyle = "solid";
+        this.style.borderColor = "cyan";
+    }).mouseout(function () {
+        this.style.borderStyle = "";
+        this.style.borderWidth = "";
+        this.style.borderColor = "";
+    });
+</script>
+</html>

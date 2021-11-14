@@ -8,12 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 @Controller
 public class MapController
@@ -54,11 +56,28 @@ public class MapController
     }
 
     @RequestMapping("/plazaHomepage")
-    public String requestMapList(Model model)
+    @ResponseBody
+    public String requestMapList()
     {
         Gson gson = new Gson();
         String mapIds = gson.toJson(mapStorageService.queryMapIdList());
-        model.addAttribute(mapIds);
-        return "";
+        return mapIds;
+    }
+
+    @RequestMapping("/map/browse")
+    public String browseMap(@RequestParam("id") String id, Model model)
+    {
+        model.addAttribute("mapId",id);
+        return "/homepage";
+    }
+
+    @RequestMapping("/map/browse/getMap")
+    @ResponseBody
+    public String getMapInJson(@RequestParam("id") String id)
+    {
+        String[][] mapBlock = mapStorageService.getMap(id);
+        Gson gson = new Gson();
+        String mapData = gson.toJson(mapBlock);
+        return mapData;
     }
 }

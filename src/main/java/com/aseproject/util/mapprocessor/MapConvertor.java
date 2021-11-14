@@ -18,7 +18,7 @@ public class MapConvertor implements Runnable
 
     public MapConvertor()
     {
-        this.baos = new ByteArrayOutputStream();
+        this.baos = new ByteArrayOutputStream(10240*8);
         isDone = false;
     }
 

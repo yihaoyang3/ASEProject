@@ -119,8 +119,15 @@ public class MapStorageInfoService {
         return macthedData;
     }
 
-    public Map<String, LinkedList<String>> queryMapIdList()
+    public List<Map<String, String>> queryMapIdList()
     {
         return dao.queryMapIdList();
+    }
+
+    public String[][] getMap(String id)
+    {
+        String mapStoragePath = dao.queryMapStoragePathById(id);
+        String[][] mapBlock = readMapFromLocal(mapStoragePath);
+        return mapBlock;
     }
 }
