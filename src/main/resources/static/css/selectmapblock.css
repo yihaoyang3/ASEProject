@@ -1,0 +1,11 @@
+.map-block-selected{
+    display: block;
+    min-height: 90px;
+    min-width: 89px;
+    border: 1px solid blue;
+}
+
+
+.map-block-selected:hover{
+    border: 2px solid red;
+}
