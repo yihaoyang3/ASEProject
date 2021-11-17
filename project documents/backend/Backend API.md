@@ -59,7 +59,7 @@ A example of method comment:
         ...
     }
 ~~~
-## API
+## First Iteration API
 ### Domain
 1. Map Storage Info
 
@@ -170,3 +170,39 @@ This method add location info to the table location_info. Check database for the
     void deleteLocationInfoById(String locationId)
 ~~~
 This method delete one location info form database by location_id.
+
+## Second Iteration API
+
+### Map query function 
+#### MapQueryController.java
+This controller class is responsible for handling the request related to map query. The methods listed below should be defined in this java class.
+##### 1. String queryMap(String keywords)
+The request from url ***/map/query*** should be handled by this method. This method should be able to receive the keywords included in the http request. To do that, the annotation **@RequestParam()** might be used. The example of how to use it:
+~~~
+String queryMap(@RequestParam("keywords") String keywords)
+~~~
+This method invokes other methods for query data in database. The keywords might be a string with keywords or a empty string. 
+
+The return value is a json string that includes the map name and map id. 
+#### MapQueryDAO.java
+##### 1. List<Map<String,String>> queryMapByName(String mapName)
+This method query map records from table map_storage_info that the map_name equal to or contain mapName. The queried field includes map_id and map_name. The matched records may beyond one. Thus every record should be sealed in a Map object like HashMap with values mapName and mapId. For example:
+~~~
+HashMap.put("mapId","");
+HashMap.put("mapName","");
+~~~
+
+Then every record should be added into a List object like LinkedList.
+
+The mapName passed into this method might be a empty string or null. In this case, this method should return all the recodes in table map_storage_info.
+
+### Log in status check
+To implement this function, the interceptor class might be used. 
+
+This function check if user logged in. If not, the request from this user to access specific url should be permitted. The urls include:
+~~~
+/upload
+~~~
+This list will be updated. Considering a convenient way to add new permitted url.
+
+Besides, all first time requests from client to access the server should be added a attribute named isLoggedIn that value is false to session.

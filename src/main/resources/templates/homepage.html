@@ -54,13 +54,15 @@
         });
     });
 
-    $("[name='map-block']").mouseover(function () {
+    $('#map-container').on('mouseover','img',function (){
         this.style.borderStyle = "solid";
         this.style.borderColor = "cyan";
-    }).mouseout(function () {
+    });
+
+    $('#map-container').on('mouseout','img',function (){
         this.style.borderStyle = "";
         this.style.borderWidth = "";
         this.style.borderColor = "";
-    });
+    })；
 </script>
 </html>
