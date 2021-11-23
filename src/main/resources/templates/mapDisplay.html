@@ -19,6 +19,18 @@
     </div>
 </div>
 
+<div class="bg-modal" id="popup-on-mapblock-selected">
+    <div class="modal-content" id="modal_container">
+        <div class="close">+</div>
+        <form action="">
+            <input type="text" name= "Location Name" placeholder="Location Name">
+            <input type="text" name= "LocationDescription" placeholder="Location Description">
+            <input type="file" accept= "image/*,video/*">
+            <a href="" class="SaveLocationInformation">Save</a>
+        </form>
+    </div>
+</div>
+
 <div class="visible-cover relative">
     <div style="width: 100%; height: auto; position: absolute; left: 0; top: 0; z-index: 0;" id="vis">
         <div th:each="row:${mapBlocks}" style="display: flex; flex-wrap: nowrap;height: auto">
@@ -109,6 +121,23 @@
         isDrag = false;
         pic.style.cursor = "default";
     }
+
+    $('.map-block-selected').on('click', function() {
+    $('#popup-on-mapblock-selected').toggle();
+    }
+
+    $(".SaveLocationInformation").click(function() {
+                $.ajax({url: "/mapEdit/addLocation",
+                        success: function(result) {
+                    alert("location information saved");
+                },
+                error: function(result) {
+                    alert("error in saving location information");
+                }});
+            });
+}
+
+
 
 </script>
 </html>
