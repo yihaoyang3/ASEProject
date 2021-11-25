@@ -52,10 +52,16 @@
 <body>
 <div class="container-fluid" style="margin: 10px 10px">
     <div class="row">
-        <div class="col-6">
+        <div class="col-4">
             <form id="mapForm" action="/upload" method="post" enctype="multipart/form-data">
                 <input type="file" id="userMap" name="map">
             </form>
+        </div>
+        <div class="col-4 offset-2">
+            <h4>Map List</h4>
+            <div id="mapList" style="display: flex; flex-direction: column; flex-wrap: nowrap">
+
+            </div>
         </div>
     </div>
 </div>
@@ -66,5 +72,19 @@
         allowedFileExtensions: ['jpg', 'png'],
         required: true
     });
+
+    $(function () {
+        $.ajax({
+            type: 'get',
+            url: '/plazaHomepage',
+            success: function (data, textStatus, jqXHR) {
+                data = JSON.parse(data);
+                for (let i = 0; i < data.length; i++) {
+                    let newLabel = '<a href="/map/browse?id=' + data[i].id + '">' + data[i].name + '</a>';
+                    $(newLabel).appendTo("#mapList");
+                }
+            }
+        });
+    })
 </script>
 </html>
