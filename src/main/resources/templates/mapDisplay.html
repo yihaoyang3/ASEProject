@@ -90,6 +90,17 @@
         });
     });
 
+    $('#map-container').on('mouseover','img',function (){
+        this.style.borderStyle = "solid";
+        this.style.borderColor = "cyan";
+    });
+
+    $('#map-container').on('mouseout','img',function (){
+        this.style.borderStyle = "";
+        this.style.borderWidth = "";
+        this.style.borderColor = "";
+    });
+
     $('.map-block-selected').on('click', function() {
     $('#popup-on-mapblock-selected').toggle();
     })

@@ -48,7 +48,7 @@ public class MapController
 
         String mapId = mapStorageService.storeMapInLocal(mapBlock);
 
-        model.addAttribute("maoId", mapId);
+        model.addAttribute("mapId", mapId);
         return "/mapDisplay";
     }
 
