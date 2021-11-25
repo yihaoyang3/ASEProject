@@ -28,6 +28,10 @@ public class MapCutter implements Runnable
         {
             x = counter.getCountX();
             y = counter.getCountY();
+            if (x == totalRow)
+            {
+                return null;
+            }
             if (y == totalCol - 1)
             {
                 counter.setCountX(x + 1);
@@ -36,10 +40,7 @@ public class MapCutter implements Runnable
             {
                 counter.setCountY(y + 1);
             }
-        }
-        if (x == totalRow )
-        {
-            return null;
+//            System.out.println(Thread.currentThread().getName() + " is processing X:" + x + ", Y: " + y);
         }
         BufferedImage i = null;
         try
@@ -86,8 +87,8 @@ public class MapCutter implements Runnable
                 }
             } else
             {
-                MapCutter.resetAll();
-                break;
+//                System.out.println("Finish processing, thread quit");
+                return;
             }
         }
     }

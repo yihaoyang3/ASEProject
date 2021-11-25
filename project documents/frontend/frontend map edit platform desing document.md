@@ -158,3 +158,75 @@ There must have a call back function to handle the response of Ajax request. Thi
 #### 7. Zoom Adjustment Button
 
 As it is shown in the [interface preview image](#prototypeImage), there are two button to zoom the map. The developer should consider how to implement this feature by change the width and height of map blocks. Notice, there should be limits for both the maximal and minimal size of map block.
+
+
+### Second Iteration 
+The image below shows the preview of the homepage.
+![homepage](https://raw.githubusercontent.com/yihaoyang3/image-rep/main/project-homepage.png)
+
+#### 1. Navigation bar
+For this function, the thymeleaf is necessary. Click the link to read the document of thymeleaf https://www.thymeleaf.org/documentation.html.  
+
+The navigation bar always appear on the top of this page. 
+
+The left side of this navigation bar has a icon that while user click it, it sends a request to ***root url "/"*** . 
+
+The right side of this navigation bar shows a link, it acquires a attribute called isLoggedIn from session. Code example:
+~~~
+<div th:unless='${#session.getAttribute("isLoggedIn")}'>
+    ...
+</div>
+ <div th:if='${#session.getAttribute("isLoggedIn")}'>
+    ...
+ </div>
+~~~
+
+If the user logged in, it acquires userName and userId from session and shows the userName. The userId should also be included in html file but it should be invisible. If there are no userName and uerId, it shows a link that the text is "click to log in".
+
+#### 2. Search box and Map list
+The search box for user to input text. Clicking the search button, the request will be sent to the url ***/map/query*** with user inputted text by json format.
+The data format is:
+~~~
+{
+    "keywords" : user inputted text
+}
+~~~
+The ajax must be used. The data format returned from server like:
+~~~
+[{
+    "mapId":"1",
+    "mapName":"map1"
+},
+{
+    "mapId":"2",
+    "mapName":"map2"
+},
+{
+    "mapId":"3",
+    "mapName":"map3"
+},
+...
+{
+    "mapId":"n",
+    "mapName":"mapN"
+}]
+~~~
+While receiving the data from server, it traverses the data and display the mapName in the map list. The mapId should also be included in the html element but it must be invisible.
+
+Besides, the **create new map** button should also be implemented. By clicking this button, it calls a method which will be describe in next chapter. 
+
+#### 3. Map load UI
+By clicking the **create new map**, a popup window shows for user to upload file. The image below is a preview:
+![upload](https://github.com/yihaoyang3/image-rep/blob/main/project-upload.png?raw=true)
+
+The user can only submit one image(jpg,png).
+
+While user click submit button, the request should be send to **url /upload** with data by form submitting. The enctype must be multipart/form-data.
+
+A form example:
+~~~
+<form id="mapForm" action="/upload" method="post" enctype="multipart/form-data">
+    <input type="text" id="mapName" name="mapName">
+    <input type="file" id="userMap" name="map">
+</form>
+~~~

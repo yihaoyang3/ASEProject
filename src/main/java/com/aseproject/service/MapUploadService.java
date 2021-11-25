@@ -19,6 +19,7 @@ public class MapUploadService
         int totalRow = originalMap.getHeight() / 30;
         int totalCol = originalMap.getWidth() / 30;
 
+        MapCutter.resetAll();
         MapCutter.setOriginalMap(originalMap);
         MapCutter.setTotalCol(totalCol);
         MapCutter.setTotalRow(totalRow);
@@ -33,11 +34,11 @@ public class MapUploadService
             mapCutter.start();
         }
 
-        MapConvertor.reset();
+        MapConvertor.resetAll();
         MapConvertor.initReceiveQueue(MapCutter.getQueue());
         MapConvertor.initBase64Block(totalRow, totalCol);
 
-        Thread[] mapConvertors = new Thread[6];
+        Thread[] mapConvertors = new Thread[16];
         for (int i = 0; i < mapConvertors.length; i++)
         {
             mapConvertors[i] = new Thread(new MapConvertor());
