@@ -86,7 +86,7 @@ public class MapEditController
 
     /**
      *
-     * @param itemInfo should include two files: mapId and locationName
+     * @param itemInfo should include two files: mapId and locationName, location coordinate X and Y
      * @param media include one video or several images
      * @return
      */
