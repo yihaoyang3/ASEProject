@@ -90,7 +90,7 @@ public class MapEditController
      * @param media include one video or several images
      * @return
      */
-    @RequestMapping("/mapEdit/addLocationItem")
+    @RequestMapping("/mapEdit/addLocation")
     @ResponseBody
     public String addLocationItem(@RequestParam("itemInfo") Map<String, Object> itemInfo, @RequestParam("media") MultipartFile[] media)
     {
