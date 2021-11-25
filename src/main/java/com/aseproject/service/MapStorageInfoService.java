@@ -2,7 +2,7 @@
 package com.aseproject.service;
 
 
-import com.aseproject.dao.MapStorageInfoDao;
+import com.aseproject.dao.MapDao;
 import com.aseproject.domain.MapStorageInfo;
 import com.aseproject.domain.Mapwithcoordinates;
 import com.google.gson.Gson;
@@ -20,7 +20,7 @@ import java.util.*;
 public class MapStorageInfoService {
 
     @Autowired
-    private MapStorageInfoDao dao;
+    private MapDao mapDao;
     
     @Value("${project.map.path}")
     private String mappath;
@@ -66,7 +66,7 @@ public class MapStorageInfoService {
             writer.flush();
             writer.close();
 
-            dao.addMap(info);
+            mapDao.addMap(info);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -121,12 +121,12 @@ public class MapStorageInfoService {
 
     public List<Map<String, String>> queryMapIdList()
     {
-        return dao.queryMapIdList();
+        return mapDao.getAllMapsById();
     }
 
     public String[][] getMap(String id)
     {
-        String mapStoragePath = dao.queryMapStoragePathById(id);
+        String mapStoragePath = mapDao.queryMapPathById(id);
         String[][] mapBlock = readMapFromLocal(mapStoragePath);
         return mapBlock;
     }

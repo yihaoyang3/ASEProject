@@ -88,13 +88,11 @@ public class LoginController
                     attributes.addFlashAttribute("errorInfo", "Account/Password not matched");
                 } else
                 {
-
                     HttpSession session = request.getSession();
                     session.setAttribute("hadLogin", true);
                     session.setAttribute("userAccountName", user.getUserAccountName());
                     session.setAttribute("userId", user.getUserId());
                     session.setAttribute("userName", user.getUserName());
-
 
                     Cookie[] cookies = new Cookie[]{new Cookie("userAccountName", user.getUserAccountName()),
                             new Cookie("userName", user.getUserName()), new Cookie("userId", user.getUserId())};
