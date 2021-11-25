@@ -111,7 +111,7 @@ public class LoginController
         {
             e.printStackTrace();
         }
-        return mark == 0 ? "/console/console" : "redirect:/home";
+        return mark == 0 ? "redirect:/login" : "redirect:/";
     }
 
     @RequestMapping("/register/newUser")
@@ -125,7 +125,7 @@ public class LoginController
                 String userId = service.registerNewUser((String) param.get("userName"), (String) param.get("userAccountName"),
                         (String) param.get("password"));
                 HttpSession session = request.getSession();
-                session.setAttribute("hadLogin", true);
+                session.setAttribute("idLoggedIn", true);
                 session.setAttribute("userAccountName", param.get("userAccountName"));
                 session.setAttribute("userId", userId);
                 session.setAttribute("userName", param.get("userName"));
@@ -146,6 +146,6 @@ public class LoginController
             model.addFlashAttribute("statusInfo", "Unknown error");
             e.printStackTrace();
         }
-        return success ? "redirect:/home" : "redirect:/register";
+        return success ? "redirect:/" : "redirect:/register";
     }
 }

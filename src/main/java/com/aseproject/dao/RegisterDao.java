@@ -12,15 +12,16 @@ public class RegisterDao
 
     public boolean checkUserName(String userName)
     {
-        String sql = "select count(user_name) from market_user where user_name = ?";
-        int count = jdbcTemplate.queryForObject(sql, new Object[]{userName}, Integer.class);
+        String sql = "select count(user_name) from user where user_name = ?";
+//        int count = jdbcTemplate.queryForObject(sql, new Object[]{userName}, Integer.class);
+        int count = jdbcTemplate.queryForObject(sql,Integer.class,userName);
         return !(count >= 1);
     }
 
     public void registerNewUser(String userId, String userName, String userAccountName, String password)
     {
-        String sql = "insert into user (user_id, user_account_name, user_name, password, is_admin) values (?,?,?,?,?);";
-        jdbcTemplate.update(sql, userId, userName, userAccountName, password, false);
+        String sql = "insert into user (user_id, user_account_name, user_name, password) values (?,?,?,?);";
+        jdbcTemplate.update(sql, userId, userName, userAccountName, password);
     }
 
     public void modifyPassword(String userId, String newPassword)
