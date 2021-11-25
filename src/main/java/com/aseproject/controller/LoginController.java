@@ -89,7 +89,7 @@ public class LoginController
                 } else
                 {
                     HttpSession session = request.getSession();
-                    session.setAttribute("hadLogin", true);
+                    session.setAttribute("isLoggedIn", true);
                     session.setAttribute("userAccountName", user.getUserAccountName());
                     session.setAttribute("userId", user.getUserId());
                     session.setAttribute("userName", user.getUserName());

@@ -11,7 +11,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object Handler) throws Exception {
-        Object hadLogin = request.getSession().getAttribute("hadLogin");
+        Object hadLogin = request.getSession().getAttribute("isLoggedIn");
         if (hadLogin == null || hadLogin.equals("")) {
             request.setAttribute("msg", "You must login before upload maps!");
             request.getRequestDispatcher("/login").forward(request, response);
