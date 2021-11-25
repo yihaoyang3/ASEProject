@@ -25,7 +25,8 @@ public class MapStorageInfoService {
     @Value("${project.map.path}")
     private String mappath;
     
-    public void storeMapInLocal(String[][] mapBlock)  {
+    public String storeMapInLocal(String[][] mapBlock)  {
+        String uuidAsString = null;
         try {
             Gson gson = new Gson();
             int row = mapBlock.length;
@@ -51,7 +52,7 @@ public class MapStorageInfoService {
                  file.mkdirs();
             }
             UUID uuid = UUID.randomUUID();
-            String uuidAsString = uuid.toString();
+            uuidAsString = uuid.toString();
             String fileName = uuid + ".json";
             File file1 = new File(mappath+fileName);
             file1.createNewFile();
@@ -71,6 +72,7 @@ public class MapStorageInfoService {
         catch (IOException e) {
             e.printStackTrace();
         }
+        return uuidAsString;
     }
 
     //read map from location
