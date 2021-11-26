@@ -1,5 +1,6 @@
 package com.aseproject.controller;
 
+
 import com.aseproject.service.MapStorageInfoService;
 import com.aseproject.service.MapUploadService;
 import com.google.gson.Gson;
@@ -10,13 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+
 import javax.imageio.ImageIO;
+
+
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
+
 
 @Controller
-public class MapController
-{
+public class MapController {
+
     @Autowired
     private MapUploadService mapUploadService;
 
@@ -24,54 +31,61 @@ public class MapController
     private MapStorageInfoService mapStorageService;
 
     @RequestMapping("/")
-    public String welcome()
-    {
+    public String welcome() {
         return "/home";
     }
 
+
+
     @RequestMapping("/upload")
-    public String uploadMap(@RequestParam("map") MultipartFile mapImage, Model model)
-    {
+    public String uploadMap(@RequestParam("map") MultipartFile mapImage, Model model) {
         String originalName = mapImage.getOriginalFilename();
         String[] s = originalName.split("\\.");
         String[][] mapBlock = null;
 
-        try
-        {
+        try {
             File f = File.createTempFile(s[0], s[1]);
             mapImage.transferTo(f);
             mapBlock = mapUploadService.processUploadedMap(ImageIO.read(f));
-        } catch (IOException | InterruptedException e)
-        {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
 
-        String mapId = mapStorageService.storeMapInLocal(mapBlock);
+        mapStorageService.storeMapInLocal(mapBlock);
 
-        model.addAttribute("mapId", mapId);
+        model.addAttribute("mapBlocks", mapBlock);
         return "/mapDisplay";
     }
 
+
+
+
+
     @RequestMapping("/plazaHomepage")
     @ResponseBody
-    public String requestMapList()
-    {
+    public String requestMapList() {
         Gson gson = new Gson();
         String mapIds = gson.toJson(mapStorageService.queryMapIdList());
         return mapIds;
     }
 
+
+
+
+
     @RequestMapping("/map/browse")
-    public String browseMap(@RequestParam("id") String id, Model model)
-    {
+    public String browseMap(@RequestParam("id") String id, Model model) {
         model.addAttribute("mapId",id);
         return "/homepage";
     }
 
+
+
+
+
     @RequestMapping("/map/browse/getMap")
     @ResponseBody
-    public String getMapInJson(@RequestParam("id") String id)
-    {
+    public String getMapInJson(@RequestParam("id") String id) {
         String[][] mapBlock = mapStorageService.getMap(id);
         Gson gson = new Gson();
         String mapData = gson.toJson(mapBlock);
