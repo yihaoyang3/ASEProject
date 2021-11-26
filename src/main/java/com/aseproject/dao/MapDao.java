@@ -4,39 +4,36 @@ import com.aseproject.domain.MapStorageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-
 import java.util.*;
 
 @Repository
-public class MapDao
-{
+public class MapDao {
 
     @Autowired
-    JdbcTemplate  jdbcTemplate;
+    JdbcTemplate jdbcTemplate;
 
-    // insert, add mapStorageInfo
+    // insert
     public void addMap(MapStorageInfo info)
     {
         String sql = "insert into map_storage_info(map_id, map_storage_name, map_storage_path) values (?,?,?)";
-        jdbcTemplate.update( sql, info.getMapId(), info.getMapStorageName(), info.getMapStoragePath());
+        jdbcTemplate.update(sql, info.getMapId(), info.getMapStorageName(), info.getMapStoragePath());
     }
 
-    // delete map information in sql
-    public void  deleteMap(String mapId)
+    // delete
+    public void deleteMap(String mapId)
     {
-        String sql =  "delete from map_storage_info where map_id = ?";
-        jdbcTemplate.update( sql, mapId);
+        String sql = "delete from map_storage_info where map_id = ?";
+        jdbcTemplate.update(sql, mapId);
     }
 
-    public List< HashMap<String, String>> queryMapByName(String query)
-    {
-        List< HashMap<String, String>> mapSet = new LinkedList<>();
+    public List<HashMap<String, String>> queryMapByName(String query) {
+        List<HashMap<String, String>> mapSet = new LinkedList<>();
 
         // default: select all (query is empty)
-        String sql = " SELECT map_id, map_name FROM map_storage_info";
+        String sql = "SELECT map_id, map_name FROM map_storage_info";
 
-        // when  query is not empty
+        // if query is not empty
+
         if (query != null || query != "") {
             String regex = "\\w*" + query + "\\w*";
             sql = "SELECT map_id, map_name FROM map_storage_info WHERE map_name REGEXP " + regex;

@@ -1,6 +1,5 @@
 package com.aseproject.controller;
 
-
 import com.aseproject.dao.MapDao;
 import com.google.gson.Gson;
 import org.json.simple.JSONArray;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
-
 
 @Controller
 public class  MapQueryController {
@@ -29,7 +27,7 @@ public class  MapQueryController {
 
         {
             JSONObject obj = new JSONObject();
-            //obj.put("mapID");
+            obj.put("mapID");
             obj.put( " mapID", row.get( " mapID"));
             obj.put( " mapName", row.get( " mapName"));
             mapList.add( obj);
@@ -39,5 +37,4 @@ public class  MapQueryController {
 
         return gson.toJson( mapList);
     }
-
 }

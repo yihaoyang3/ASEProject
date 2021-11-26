@@ -21,7 +21,7 @@ public class UserDao
     public User checkLogin(User checkedUser)
     {
         User userInfoInDb = new User();
-        String sqlStr = "select password, user_id,is_admin,user_account_name from user where user_name = ?";
+        String sqlStr = "select password, user_id,user_account_name from user where user_name = ?";
         jdbcTemplate.query(sqlStr, new Object[]{checkedUser.getUserName()}, resultSet -> {
             userInfoInDb.setUserId(resultSet.getString("user_id"));
             userInfoInDb.setPassword(resultSet.getString("password"));
