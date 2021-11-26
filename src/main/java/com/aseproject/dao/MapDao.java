@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.*;
 
 @Repository
@@ -35,7 +36,7 @@ public class MapDao
         // default: select all (query is empty)
         String sql = " SELECT map_id, map_name FROM map_storage_info";
 
-        // when query is not empty
+        // when  query is not empty
         if (query != null || query != "") {
             String regex = "\\w*" + query + "\\w*";
             sql = "SELECT map_id, map_name FROM map_storage_info WHERE map_name REGEXP " + regex;
@@ -44,19 +45,19 @@ public class MapDao
         // put all result into a list
         List<Map <String, Object>> rows = jdbcTemplate.queryForList(sql);
         for (Map row : rows) {
-            HashMap <String, String> item = new HashMap<>() {{
-                put( "mapID", (String) row.get("map_id"));
-                put( "mapName", (String) row.get("map_name"));
+            HashMap <String, String> item =  new HashMap<>() {{
+                put( "mapID", (String)  row.get("map_id"));
+                put( "mapName", (String)  row.get("map_name"));
             }};
             mapSet.add(item);
         }
         return mapSet;
     }
 
-    public List<Map<String, String>> getAllMapsById()
+    public List<Map<String, String>>  getAllMapsById()
     {
-        List<Map <String, String>> mapSet = new LinkedList<>();
-        String sql = " select map_id, map_storage_name from map_storage_info";
+        List<Map <String, String>> mapSet =  new LinkedList<>();
+        String sql = "  select map_id, map_storage_name from map_storage_info";
         jdbcTemplate.query( sql, resultSet -> {
 
             HashMap <String, String> mapObject = new HashMap<>();
