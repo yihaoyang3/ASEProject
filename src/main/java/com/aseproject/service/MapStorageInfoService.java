@@ -1,6 +1,7 @@
 package com.aseproject.service;
 
 
+import com.aseproject.dao.MapDao;
 import com.aseproject.domain.MapStorageInfo;
 import com.aseproject.domain.Mapwithcoordinates;
 import com.google.gson.Gson;
@@ -12,6 +13,14 @@ import java.io.*;
 
 public class MapStorageInfoService {
     public void storeMapInLocal(String[][] mapBlock)  {
+    @Autowired
+    private MapDao mapDao;
+    
+    @Value("${project.map.path}")
+    private String mappath;
+    
+    public String storeMapInLocal(String[][] mapBlock)  {
+        String uuidAsString = null;
         try {
             Gson gson = new Gson();
             int row = mapBlock.length;
@@ -35,13 +44,22 @@ public class MapStorageInfoService {
                 file.createNewFile();
             }
 
-            String j = json.toString();
-            byte[] b = j.getBytes();
-            int l = j.length();
-            OutputStream os = new FileOutputStream(file);
-            os.write(b, 0, l);
+            UUID uuid = UUID.randomUUID();
+            uuidAsString = uuid.toString();
+            String fileName = uuid + ".json";
+            File file1 = new File(mappath+fileName);
+            file1.createNewFile();
 
-            os.close();
+            MapStorageInfo info = new MapStorageInfo();
+            info.setMapId(uuidAsString);
+            info.setMapStoragePath(mappath+fileName);
+            info.setMapStorageName(fileName);
+
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1, false), "UTF-8"));
+            writer.write(json);
+            writer.flush();
+            writer.close();
+            mapDao.addMap(info);
         }
         catch (IOException exception)
         {
@@ -120,16 +138,17 @@ public class MapStorageInfoService {
         }
 
         return macthedData;
-
     }
 
+    public List<Map<String, String>> queryMapIdList()
+    {
+        return mapDao.getAllMapsById();
+    }
 
-
-    public static void main(String[] args) {
-
-        String filePath = "/Users/Desktop/Data.json";
-        String[][] ss = readMapFromLocal(filePath);
-        System.out.print(new Gson().toJson(ss[88][66])); // test with coordinates [x][y]
-
+    public String[][] getMap(String id)
+    {
+        String mapStoragePath = mapDao.queryMapPathById(id);
+        String[][] mapBlock = readMapFromLocal(mapStoragePath);
+        return mapBlock;
     }
 }
