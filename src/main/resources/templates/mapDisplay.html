@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>display</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/css/bootstrap-4.3.1.min.css}">
     <link rel="stylesheet" th:href="@{/css/project/mapbrowse.css}">
 </head>
@@ -18,15 +25,37 @@
     </div>
 </div>
 
-<div class="bg-modal" id="popup-on-mapblock-selected">
-    <div class="modal-content" id="modal_container">
-        <div class="close">+</div>
-        <form action="">
-            <input type="text" name= "Location Name" placeholder="Location Name">
-            <input type="text" name= "LocationDescription" placeholder="Location Description">
-            <input type="file" accept= "image/*,video/*">
-            <a href="" class="SaveLocationInformation">Save</a>
-        </form>
+<div class="modal fade" id="popup-on-mapblock-selected" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="container">
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col text-center">
+                                <label id="popupmapIdLabel" hidden="hidden" th:value="${mapId}"></label>
+                                <input type="text" class="form-control" name= "LocationName" id="LocationName" placeholder="Location Name">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col">
+                                <input id="LocationDescriptionMedia" name= "LocationDescriptionMedia"  type="file" accept= "image/*,video/*" multiple><br>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-primary SaveLocationInformation" id="SaveLocationInformation">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -61,11 +90,54 @@
     .relative{
         position: relative;
     }
+    .SaveLocationInformation {
+	background-color: black;
+	border: 2px solid white;
+	border-radius: 30px;
+	text-decoration: none;
+	padding: 10px 28px;
+	color: white;
+	margin-top: 10px;
+	display: inline-block;
+}
+.SaveLocationInformation:hover {
+		background-color: white;
+		color: black;
+		border: 2px solid black;
+	}
 </style>
 
 <script th:src="@{/js/jquery/jquery-3.3.1.js}"></script>
 <script th:src="@{/js/map/mapbrowse.js}"></script>
 <script type="text/javascript">
+
+    $(".SaveLocationInformation").click(function() {
+        var formData= new FormData();
+        debugger;
+        let itemMap = new Map();
+        itemMap.set('mapId', $("#mapIdLabel").attr("value"));
+        itemMap.set('locationName', document.getElementById("LocationName").value);
+        //var itemData = {mapId:$("#mapIdLabel").attr("value"),
+        //                locationName:document.getElementById("LocationName").value};
+        let fileblob=new Blob([document.getElementById('LocationDescriptionMedia').files[0]],{type:'jpg'});
+        formData = {
+                    'itemInfo': itemMap,
+                    'media': [fileblob]
+                    };
+        $.ajax({url: "/mapEdit/addLocation?itemInfo=${itemMap}&media=${fileblob}",
+                type: 'POST',
+                dataType: 'json',
+                processData: false,
+                data: formData,
+                success: function(result) {
+                    console.log('click')
+                    console.log(result);
+                },
+                error: function(result) {
+                    alert("error in saving location information");
+                }
+        });
+    });
 
     $(function () {
         let mapId = $("#mapIdLabel").attr("value");
@@ -80,7 +152,7 @@
                     let rowDiv = '<div class="map-row" id="' + 'row' + i + '"></div>'
                     $(rowDiv).appendTo("#map-container");
                     for (let j = 0; j < data[i].length; j++) {
-                        let mapBlock = '<img name="map-block" class="block" draggable="false" src="' + imgType +
+                        let mapBlock = '<img name="map-block" class="block" data-toggle="modal" data-target="#popup-on-mapblock-selected" draggable="false" src="' + imgType +
                             data[i][j] +
                             '">';
                         $(mapBlock).appendTo(rowId);
@@ -105,14 +177,5 @@
     $('#popup-on-mapblock-selected').toggle();
     })
 
-    $(".SaveLocationInformation").click(function() {
-                $.ajax({url: "/mapEdit/addLocation",
-                        success: function(result) {
-                    alert("location information saved");
-                },
-                error: function(result) {
-                    alert("error in saving location information");
-                }});
-            });
 </script>
 </html>
