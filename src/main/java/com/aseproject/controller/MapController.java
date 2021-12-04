@@ -47,8 +47,8 @@ public class MapController {
     @ResponseBody
     public String requestMapList() {
         Gson gson = new Gson();
-        MapService mapService = new MapService();
-        String mapIds = gson.toJson(mapService.readMapFromLocal());
+        MapDao mapDao = new MapDao();
+        String mapIds = gson.toJson(mapDao.getAllMaps());
         return mapIds;
     }
 
