@@ -5,19 +5,9 @@ import java.io.Serializable;
 public class UserInfo implements Serializable
 {
     private String userId;
-    private String userName;
-    private String userAccountName;
+    private String accountName;
+    private String email;
     private String password;
-
-    public String getUserAccountName()
-    {
-        return userAccountName;
-    }
-
-    public void setUserAccountName(String userAccountName)
-    {
-        this.userAccountName = userAccountName;
-    }
 
     public String getUserId()
     {
@@ -29,14 +19,24 @@ public class UserInfo implements Serializable
         this.userId = userId;
     }
 
-    public String getUserName()
+    public String getAccountName()
     {
-        return userName;
+        return this.accountName;
     }
 
-    public void setUserName(String userName)
+    public void setAccountName(String accountName)
     {
-        this.userName = userName;
+        this.accountName = accountName;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 
     public String getPassword()

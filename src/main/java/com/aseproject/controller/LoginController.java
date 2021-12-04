@@ -90,12 +90,12 @@ public class LoginController
                 {
                     HttpSession session = request.getSession();
                     session.setAttribute("isLoggedIn", true);
-                    session.setAttribute("userAccountName", user.getUserAccountName());
                     session.setAttribute("userId", user.getUserId());
-                    session.setAttribute("userName", user.getUserName());
+                    session.setAttribute("accountName", user.getAccountName());
+                    session.setAttribute("userEmail", user.getEmail());
 
-                    Cookie[] cookies = new Cookie[]{new Cookie("userAccountName", user.getUserAccountName()),
-                            new Cookie("userName", user.getUserName()), new Cookie("userId", user.getUserId())};
+                    Cookie[] cookies = new Cookie[]{new Cookie("userEmail", user.getEmail()),
+                            new Cookie("accountName", user.getAccountName()), new Cookie("userId", user.getUserId())};
                     for (Cookie cookie : cookies)
                     {
                         response.addCookie(cookie);

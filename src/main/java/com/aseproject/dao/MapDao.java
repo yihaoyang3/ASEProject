@@ -12,7 +12,7 @@ public class MapDao {
     // insert
     public void addMap(MapInfo info) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "insert into map_storage_info(map_id, map_storage_name) values (?,?,?)";
+        String sql = "insert into map_storage_info(map_id, map_name) values (?,?)";
         jdbcTemplate.update(sql, info.getMapId(), info.getMapName());
     }
 

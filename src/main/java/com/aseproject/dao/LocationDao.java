@@ -15,7 +15,7 @@ public class LocationDao {
     public void addLocInfoById(LocationInfo locationInfo){
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "insert into location_info(location_id, map_id, location_name, coordinate_x, coordinate_y, location_description_file_name) " +
-                "values (?,?,?,?,?,?,?)";
+                "values (?,?,?,?,?,?)";
         jdbcTemplate.update(sql, locationInfo.getLocationId(), locationInfo.getMapId(), locationInfo.getLocationName(),
                 locationInfo.getX(), locationInfo.getY(), locationInfo.getDescriptionFile());
     }

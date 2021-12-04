@@ -1,11 +1,8 @@
 package com.aseproject.dao;
 
 import com.aseproject.domain.UserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import javax.sql.DataSource;
 
 @Repository
 public class UserDao {
@@ -20,14 +17,13 @@ public class UserDao {
     public UserInfo checkLogin(UserInfo checkedUser) {
         UserInfo userInfo = new UserInfo();
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sqlStr = "select password, user_id, user_account_name from user where user_name = ?";
-        jdbcTemplate.query(sqlStr, new Object[]{checkedUser.getUserName()}, resultSet -> {
+        String sql = "select user_id, account_name, password from user where email = ?";
+        jdbcTemplate.query(sql, new Object[]{checkedUser.getEmail()}, resultSet -> {
             userInfo.setUserId(resultSet.getString("user_id"));
             userInfo.setPassword(resultSet.getString("password"));
-            userInfo.setUserAccountName(resultSet.getString("user_account_name"));
+            userInfo.setAccountName(resultSet.getString("account_name"));
         });
-        if (!checkedUser.getPassword().equals(userInfo.getPassword()))
-        {
+        if (!checkedUser.getPassword().equals(userInfo.getPassword())) {
             return null;
         }
         return userInfo;
@@ -35,18 +31,18 @@ public class UserDao {
 
     /* Register */
     //  check whether user's name is occupied when registering
-    public boolean checkUserName(String userName) {
+    public boolean checkUserName(String email) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "select count(user_name) from user where user_name = ?";
-        int count = jdbcTemplate.queryForObject(sql,Integer.class,userName);
+        String sql = "select count(email) from user where email = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, email);
         return !(count >= 1);
     }
 
     // register
-    public void registerNewUser(String userId, String userName, String userAccountName, String password) {
+    public void registerNewUser(String userId, String userAccountName, String userEmail, String password) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "insert into user (user_id, user_account_name, user_name, password) values (?,?,?,?);";
-        jdbcTemplate.update(sql, userId, userName, userAccountName, password);
+        String sql = "insert into user (user_id, account_name, email, password) values (?,?,?,?);";
+        jdbcTemplate.update(sql, userId, userAccountName, userAccountName, password);
     }
 
     /* Other operations */

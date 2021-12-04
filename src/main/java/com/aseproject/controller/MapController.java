@@ -36,9 +36,7 @@ public class MapController {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
         mapService.storeMapInLocal(mapBlock);
-
         model.addAttribute("mapBlocks", mapBlock);
         return "/mapDisplay";
     }
