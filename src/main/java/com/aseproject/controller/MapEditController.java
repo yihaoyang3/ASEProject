@@ -85,22 +85,22 @@ public class MapEditController
     }
 
     /**
-     *
      * @param itemInfo should include two files: mapId and locationName, location coordinate X and Y
-     * @param media include one video or several images
+     * @param media    include only one video or one images
      * @return
      */
     @RequestMapping("/mapEdit/addLocation")
     @ResponseBody
-    public String addLocationItem(@RequestParam("itemInfo") Map<String, Object> itemInfo, @RequestParam("media") MultipartFile[] media)
+    public String addLocationItem(@RequestParam("itemInfo") Map<String, Object> itemInfo,
+                                  @RequestParam("media") MultipartFile media)
     {
-        if (itemInfo != null&& media != null)
+
+        if (itemInfo != null && media != null)
         {
             return "Success";
-        }else
+        } else
         {
             return "No data";
         }
     }
-
 }
