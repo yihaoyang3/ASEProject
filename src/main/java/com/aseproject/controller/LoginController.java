@@ -2,7 +2,7 @@ package com.aseproject.controller;
 
 import com.aseproject.customexception.UserNameExisted;
 import com.aseproject.dao.UserDao;
-import com.aseproject.domain.User;
+import com.aseproject.domain.UserInfo;
 import com.aseproject.service.RegisterService;
 import com.aseproject.util.ValidityCodeUtil;
 import com.google.code.kaptcha.Constants;
@@ -73,7 +73,7 @@ public class LoginController
     }
 
     @RequestMapping("/checkin")
-    public String login(HttpServletRequest request, HttpServletResponse response, User user,
+    public String login(HttpServletRequest request, HttpServletResponse response, UserInfo user,
                         RedirectAttributes attributes)
     {
         int mark = 0;

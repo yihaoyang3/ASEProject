@@ -2,7 +2,7 @@ package com.aseproject.domain;
 
 import java.io.Serializable;
 
-public class User implements Serializable
+public class UserInfo implements Serializable
 {
     private String userId;
     private String userName;

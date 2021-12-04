@@ -10,7 +10,7 @@ public class InterceptorConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors (InterceptorRegistry registry) {
         org.springframework.web.servlet.config.annotation.WebMvcConfigurer.super.addInterceptors(registry);
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/upload");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/uploa");
         registry.addInterceptor(new SessionInterceptor()).addPathPatterns("/**");
     }
 

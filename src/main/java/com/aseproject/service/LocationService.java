@@ -9,9 +9,9 @@ import java.io.File;
 import java.io.IOException;
 
 @Service
-public class LocationInfoService {
+public class LocationService {
 
-    @Value("D://")
+    @Value("${project.location.path}")
     private String path;
 
     public String saveLocVideo(MultipartFile file) throws IOException {

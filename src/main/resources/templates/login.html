@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>User sign in</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap-4.3.1.min.css}">
-    <link rel="stylesheet" th:href="@{/css/LoginStyle.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/util/loginstyle.css}">
 </head>
 <body class="login-body">
 <div class="login-container">
@@ -56,10 +56,9 @@
         </div>
     </div>
 </div>
-<script th:src="@{/js/jquery/jquery-3.3.1.js}"></script>
+<script th:src="@{/js/jquery/jquery-3.6.0.min.js}"></script>
 <script th:src="@{/js/bootstrap/bootstrap.js}"></script>
-<script th:src="@{/js/MD5Encode.js}"></script>
-<script th:src="@{/js/common/login.js}"></script>
+<script th:src="@{/js/util/MD5Encode.js}"></script>
 </body>
 <script>
     function submitForm() {
