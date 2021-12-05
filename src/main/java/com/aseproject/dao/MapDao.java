@@ -12,14 +12,14 @@ public class MapDao {
     // insert
     public void addMap(MapInfo info) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "insert into map_storage_info(map_id, map_name) values (?,?)";
+        String sql = "insert into aseproject.map_storage_info(map_id, map_name) values (?,?)";
         jdbcTemplate.update(sql, info.getMapId(), info.getMapName());
     }
 
     // delete
     public void delMap(String mapId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "delete from map_storage_info where map_id = ?";
+        String sql = "delete from aseproject.map_storage_info where map_id = ?";
         jdbcTemplate.update(sql, mapId);
     }
 
@@ -30,12 +30,12 @@ public class MapDao {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
         // default: select all (query is empty)
-        String sql = "SELECT map_id, map_name FROM map_storage_info";
+        String sql = "SELECT map_id, map_name FROM aseproject.map_storage_info";
 
         // if query is not empty
         if (query != null || query != "") {
             String regex = "\\w*" + query + "\\w*";
-            sql = "SELECT map_id, map_name FROM map_storage_info WHERE map_name REGEXP " + regex;
+            sql = "SELECT map_id, map_name FROM aseproject.map_storage_info WHERE map_name REGEXP " + regex;
         }
 
         // put all result into a list
@@ -61,7 +61,7 @@ public class MapDao {
         List<Map <String, String>> mapSet =  new LinkedList<>();
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        String sql = "select map_id, map_name from map_storage_info";
+        String sql = "select map_id, map_name from aseproject.map_storage_info";
         jdbcTemplate.query(sql, resultSet -> {
             HashMap <String, String> mapObject = new HashMap<>();
             mapObject.put("id", (String) resultSet.getObject("map_id"));

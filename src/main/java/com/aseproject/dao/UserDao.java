@@ -31,30 +31,30 @@ public class UserDao {
 
     /* Register */
     //  check whether user's name is occupied when registering
-    public boolean checkUserName(String email) {
+    public boolean checkUserExist(String userEmail) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "select count(email) from user where email = ?";
-        int count = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        String sql = "select count(userEmail) from aseproject.user where email = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, userEmail);
         return !(count >= 1);
     }
 
     // register
-    public void registerNewUser(String userId, String userAccountName, String userEmail, String password) {
+    public void registerNewUser(String userId, String accountName, String userEmail, String password) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "insert into user (user_id, account_name, email, password) values (?,?,?,?);";
-        jdbcTemplate.update(sql, userId, userAccountName, userAccountName, password);
+        String sql = "insert into aseproject.user (user_id, account_name, email, password) values (?,?,?,?);";
+        jdbcTemplate.update(sql, userId, accountName, userEmail, password);
     }
 
     /* Other operations */
     public void modifyPassword(String userId, String newPassword) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "update user set password = ? where user_id = ?";
+        String sql = "update aseproject.user set password = ? where user_id = ?";
         jdbcTemplate.update(sql, newPassword, userId);
     }
 
     public boolean checkOldPassword(String userId, String oldPassword) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "select count(password) from user where user_id = ? and password = ? and is_admin = ?";
+        String sql = "select count(password) from aseproject.user where user_id = ? and password = ? and is_admin = ?";
         int count = jdbcTemplate.queryForObject(sql, new Object[]{userId, oldPassword,false}, Integer.class);
         return count == 1;
     }

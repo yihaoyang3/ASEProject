@@ -37,13 +37,13 @@ public class LoginController
     @RequestMapping("/login")
     public String login()
     {
-        return "/account/login";
+        return "/login";
     }
 
     @RequestMapping("/register")
     public String entrance()
     {
-        return "/account/register";
+        return "/register";
     }
 
     @RequestMapping("/getValidityCode")
@@ -94,8 +94,8 @@ public class LoginController
                     session.setAttribute("accountName", user.getAccountName());
                     session.setAttribute("userEmail", user.getEmail());
 
-                    Cookie[] cookies = new Cookie[]{new Cookie("userEmail", user.getEmail()),
-                            new Cookie("accountName", user.getAccountName()), new Cookie("userId", user.getUserId())};
+                    Cookie[] cookies = new Cookie[]{new Cookie("UserEmail", user.getEmail()),
+                            new Cookie("AccountName", user.getAccountName()), new Cookie("UserId", user.getUserId())};
                     for (Cookie cookie : cookies)
                     {
                         response.addCookie(cookie);
@@ -120,28 +120,24 @@ public class LoginController
         boolean success = false;
         try
         {
-            if (ValidityCodeUtil.validating(request))
-            {
-                String userId = service.registerNewUser((String) param.get("userName"), (String) param.get("userAccountName"),
+            if (ValidityCodeUtil.validating(request)) {
+                String userId = service.registerNewUser((String) param.get("userEmail"), (String) param.get("accountName"),
                         (String) param.get("password"));
                 HttpSession session = request.getSession();
                 session.setAttribute("idLoggedIn", true);
-                session.setAttribute("userAccountName", param.get("userAccountName"));
                 session.setAttribute("userId", userId);
-                session.setAttribute("userName", param.get("userName"));
+                session.setAttribute("accountName", param.get("accountName"));
+                session.setAttribute("userEmail", param.get("userEmail"));
                 success = true;
-            } else
-            {
+            } else {
                 model.addFlashAttribute("statusCode", 0);
                 model.addFlashAttribute("statusInfo", "Verification code doesn't match");
             }
-        } catch (UserNameExisted e)
-        {
+        } catch (UserNameExisted e) {
             model.addFlashAttribute("statusCode", 0);
             model.addFlashAttribute("statusInfo", "User name existed");
             e.printStackTrace();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             model.addFlashAttribute("statusCode", 0);
             model.addFlashAttribute("statusInfo", "Unknown error");
             e.printStackTrace();

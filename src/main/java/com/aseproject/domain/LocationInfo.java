@@ -1,6 +1,6 @@
 package com.aseproject.domain;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class LocationInfo {
 

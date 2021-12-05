@@ -6,7 +6,7 @@ public class UserInfo implements Serializable
 {
     private String userId;
     private String accountName;
-    private String email;
+    private String userEmail;
     private String password;
 
     public String getUserId()
@@ -31,12 +31,12 @@ public class UserInfo implements Serializable
 
     public String getEmail()
     {
-        return email;
+        return userEmail;
     }
 
     public void setEmail(String email)
     {
-        this.email = email;
+        this.userEmail = email;
     }
 
     public String getPassword()
