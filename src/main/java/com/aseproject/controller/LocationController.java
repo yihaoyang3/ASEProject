@@ -24,10 +24,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * @classname LocationController
- * @description Handling map editing request, receiving location description files save and load
+ * Handling map editing request, receiving location description files save and load
  * @author Yicheng Lu
- * @date Dec 5th, 2021
  */
 @Controller
 public class LocationController
@@ -42,8 +40,8 @@ public class LocationController
     private LocationService locationService;
 
     /**
-     * @description search for customized location information related to a map and send to front
-     * @param mapId: Map id string
+     * search for customized location information related to a map and send to front
+     * @param mapId Map id string
      * @return location information in json format
      */
     @RequestMapping("/mapEdit/getLocationItems")
@@ -65,8 +63,8 @@ public class LocationController
     }
 
     /**
-     * @description Get location description media and save in local
-     * @param file: Media file uploaded by users
+     * Get location description media and save in local
+     * @param file Media file uploaded by users
      * @return Saving successfully or failed message
      * @throws IllegalStateException
      * @throws IOException
@@ -80,9 +78,9 @@ public class LocationController
     }
 
     /**
-     * @description Searching for the location description file path, reading media file and send to front
-     * @param path: Location description file position in local
-     * @param response: Http Servlet Response
+     * Searching for the location description file path, reading media file and send to front
+     * @param path Location description file position in local
+     * @param response Http Servlet Response
      */
     @RequestMapping(value = "/showVideo", method = RequestMethod.GET)
     @ResponseBody
@@ -102,9 +100,9 @@ public class LocationController
     }
 
     /**
-     * @description Searching for all the media files related to a certain map
+     * Searching for all the media files related to a certain map
      * @param itemInfo Including two files: mapId and locationName, location coordinate X and Y
-     * @param media: Description file including one video or one image
+     * @param media Description file including one video or one image
      * @return Responding message
      */
     @RequestMapping("/mapEdit/addLocation")
