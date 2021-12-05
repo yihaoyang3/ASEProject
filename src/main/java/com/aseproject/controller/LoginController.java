@@ -23,10 +23,8 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 /**
- * @classname LoginController
- * @description Handling request from login and register webpage
+ * Handling request from login and register webpage
  * @author Yihao Yang
- * @date Dec 05th, 2021
  */
 
 @Controller
@@ -42,7 +40,7 @@ public class LoginController
     private Producer captchaProducer;
 
     /**
-     * @description Setting default login url
+     * Setting default login url
      * @return Login url
      */
     @RequestMapping("/login")
@@ -52,7 +50,7 @@ public class LoginController
     }
 
     /**
-     * @description Setting default register url
+     * Setting default register url
      * @return Register url
      */
     @RequestMapping("/register")
@@ -62,9 +60,9 @@ public class LoginController
     }
 
     /**
-     * @description Generating validating code
-     * @param request: Http Servlet Request
-     * @param response: Http Servlet Response
+     * Generating validating code
+     * @param request Http Servlet Request
+     * @param response Http Servlet Response
      */
     @RequestMapping("/getValidityCode")
     public void generateCode(HttpServletRequest request, HttpServletResponse response)
@@ -93,11 +91,11 @@ public class LoginController
     }
 
     /**
-     * @description Receiving login request from webpage, check whether user exist or not
-     * @param request: Http Servlet Request
-     * @param response: Http Servlet Response
-     * @param attributes: Redirect Attributes
-     * @param uncheckedUser: User DTO
+     * Receiving login request from webpage, check whether user exist or not
+     * @param request Http Servlet Request
+     * @param response Http Servlet Response
+     * @param attributes Redirect Attributes
+     * @param uncheckedUser User DTO
      * @return Redirecting to login page or home page according to $mark$
      */
     @RequestMapping("/checkin")
@@ -134,10 +132,10 @@ public class LoginController
     }
 
     /**
-     * @description Receiving register request from webpage and send to UserDao to inject user information into database
-     * @param param: Map structure used for storing user information
-     * @param request: Http Servlet Request
-     * @param model: Redirect Attributes
+     * Receiving register request from webpage and send to UserDao to inject user information into database
+     * @param param Map structure used for storing user information
+     * @param request Http Servlet Request
+     * @param model Redirect Attributes
      * @return Redirecting to home or register page according to $success$
      */
     @RequestMapping("/register/newUser")

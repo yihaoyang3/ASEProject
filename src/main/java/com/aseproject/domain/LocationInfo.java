@@ -3,10 +3,8 @@ package com.aseproject.domain;
 //import java.util.ArrayList;
 
 /**
- * @classname LocationInfo
- * @description Location DTO
+ * Location DTO
  * @author Yuchen Shen
- * @date Dec 5th, 2021
  */
 public class LocationInfo {
 

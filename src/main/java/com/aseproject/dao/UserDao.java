@@ -6,10 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
- * @classname UserDao
- * @description Database operations related to users
+ * Database operations related to users
  * @author Jitong Yang
- * @date Dec 5th, 2021
  */
 @Repository
 public class UserDao {
@@ -23,8 +21,8 @@ public class UserDao {
 //    }
 
     /**
-     * @description Checking user's existence when login
-     * @param checkedUser: User DTO
+     * Checking user's existence when login
+     * @param checkedUser User DTO
      * @return User DTO
      */
     public UserInfo checkLogin(UserInfo checkedUser) {
@@ -43,8 +41,8 @@ public class UserDao {
     }
 
     /**
-     * @description Checking whether user's name is occupied when registering
-     * @param userEmail: User email string
+     * Checking whether user's name is occupied when registering
+     * @param userEmail User email string
      * @return Boolean value depending on user name exist or not
      */
     public boolean checkUserExist(String userEmail) {
@@ -54,11 +52,11 @@ public class UserDao {
     }
 
     /**
-     * @description Inserting user information into database
-     * @param userId: User unique id string
-     * @param accountName: User customized account name
-     * @param userEmail: User email string
-     * @param password: User password
+     * Inserting user information into database
+     * @param userId User unique id string
+     * @param accountName User customized account name
+     * @param userEmail User email string
+     * @param password User password
      */
     public void registerNewUser(String userId, String accountName, String userEmail, String password) {
         String sql = "insert into user (user_id, account_name, email, password) values (?,?,?,?);";
@@ -66,9 +64,9 @@ public class UserDao {
     }
 
     /**
-     * @description Changing password
-     * @param userId: User unique id string
-     * @param newPassword: New password
+     * Changing password
+     * @param userId User unique id string
+     * @param newPassword New password
      */
     public void modifyPassword(String userId, String newPassword) {
         String sql = "update user set password = ? where user_id = ?";
@@ -76,9 +74,9 @@ public class UserDao {
     }
 
     /**
-     * @description Checking user password is correct or not. Before registering or changing password operations
-     * @param userId: User unique id string
-     * @param oldPassword: Old Password
+     * Checking user password is correct or not. Before registering or changing password operations
+     * @param userId User unique id string
+     * @param oldPassword Old Password
      * @return Boolean value depending on password is correct or not
      */
     public boolean checkOldPassword(String userId, String oldPassword) {

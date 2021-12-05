@@ -1,10 +1,8 @@
 package com.aseproject.domain;
 
 /**
- * @classname MapBlockInfo
- * @description Map block DTO
+ * Map block DTO
  * @author Yicheng Lu
- * @date Dec 5th, 2021
  */
 public class MapBlockInfo {
 

@@ -16,10 +16,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @classname MapController
- * @description Handling request from map upload page. Processing map image, save in local and send to MapDao to store related information into database
+ * Handling request from map upload page. Processing map image, save in local and send to MapDao to store related information into database
  * @author Yihao Yang
- * @date Dec 05th, 2021
  */
 @Controller
 public class MapController {
@@ -31,7 +29,7 @@ public class MapController {
     private MapService mapService;
 
     /**
-     * @descirption Setting home page
+     * Setting home page
      * @return Home page url
      */
     @RequestMapping("/")
@@ -40,9 +38,9 @@ public class MapController {
     }
 
     /**
-     * @description Receiving map image and processing
-     * @param mapImage: Map image
-     * @param model: Data transfer flow
+     * Receiving map image and processing
+     * @param mapImage Map image
+     * @param model Data transfer flow
      * @return Redirecting to map display page
      */
     @RequestMapping("/upload")
@@ -65,7 +63,7 @@ public class MapController {
     }
 
     /**
-     * @description Reading all maps from database
+     * Reading all maps from database
      * @return String of all map id
      */
     @RequestMapping("/plazaHomepage")
@@ -77,9 +75,9 @@ public class MapController {
     }
 
     /**
-     * @description Searching for maps according to map id
-     * @param id: Map id string
-     * @param model: Data transfer flow
+     * Searching for maps according to map id
+     * @param id Map id string
+     * @param model Data transfer flow
      * @return Home url
      */
     @RequestMapping("/map/browse")
@@ -89,8 +87,8 @@ public class MapController {
     }
 
     /**
-     * @description Reading map local storage json file according to map id
-     * @param id: Map id string
+     * Reading map local storage json file according to map id
+     * @param id Map id string
      * @return map data in json format
      */
     @RequestMapping("/map/browse/getMap")

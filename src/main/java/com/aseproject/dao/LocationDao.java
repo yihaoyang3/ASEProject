@@ -10,10 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @classname LocationDao
- * @description Database operation related to customized location on map
+ * Database operation related to customized location on map
  * @author Jitong Yang
- * @date Dec 5th, 2021
  */
 @Repository
 public class LocationDao {
@@ -22,8 +20,8 @@ public class LocationDao {
     private JdbcTemplate jdbcTemplate;
 
     /**
-     * @description Saving customized location into database
-     * @param locationInfo: Location DTO
+     * Saving customized location into database
+     * @param locationInfo Location DTO
      */
     public void addLocInfoById(LocationInfo locationInfo){
         String sql = "insert into location_info(location_id, map_id, location_name, coordinate_x, coordinate_y, location_description_file_name) " +
@@ -33,8 +31,8 @@ public class LocationDao {
     }
 
     /**
-     * @description Deleting location information according to location id
-     * @param locationId: Location unique id string
+     * Deleting location information according to location id
+     * @param locationId Location unique id string
      */
     public void deleteLocInfoById(String locationId){
         String sql = "delete from location_info where location_id = ?";
@@ -42,8 +40,8 @@ public class LocationDao {
     }
 
     /**
-     * @description Searching for all location information according to unique map id
-     * @param mapid: Map unique id string
+     * Searching for all location information according to unique map id
+     * @param mapid Map unique id string
      * @return List of related location
      */
     public ArrayList<LocationInfo> getLocByMapId(String mapid) {

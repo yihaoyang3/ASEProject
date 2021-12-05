@@ -7,10 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 /**
- * @classname MapDao
- * @description Database operations related to maps
+ * Database operations related to maps
  * @author Yuchen Shen
- * @date Dec 5th, 2021
  */
 @Repository
 public class MapDao {
@@ -19,8 +17,8 @@ public class MapDao {
     private JdbcTemplate jdbcTemplate;
 
     /**
-     * @description Adding map into database
-     * @param info: Map DTO
+     * Adding map into database
+     * @param info Map DTO
      */
     public void addMap(MapInfo info) {
         String sql = "insert into map_storage_info(map_id, map_name) values (?,?)";
@@ -28,8 +26,8 @@ public class MapDao {
     }
 
     /**
-     * @description Deleting map from database by map unique id
-     * @param mapId: Map unique id string
+     * Deleting map from database by map unique id
+     * @param mapId Map unique id string
      */
     public void delMap(String mapId) {
         String sql = "delete from map_storage_info where map_id = ?";
@@ -37,8 +35,8 @@ public class MapDao {
     }
 
     /**
-     * @description Searching for maps by user customized name
-     * @param query: User customized name string
+     * Searching for maps by user customized name
+     * @param query User customized name string
      * @return Set of map DTO
      */
     public List<HashMap<String, String>> getMapByName(String query) {
@@ -73,7 +71,7 @@ public class MapDao {
 //    }
 
     /**
-     * @description Get a list of all maps stored in database
+     * Get a list of all maps stored in database
      * @return List of all map DTO
      */
     public List<Map<String, String>> getAllMaps() {
