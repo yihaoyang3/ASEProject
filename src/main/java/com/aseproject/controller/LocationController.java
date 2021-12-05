@@ -23,8 +23,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * @classname LocationController
+ * @description Handling map editing request, receiving location description files save and load
+ * @author Yicheng Lu
+ * @date Dec 5th, 2021
+ */
 @Controller
-public class MapEditController
+public class LocationController
 {
     @Value("${project.location.path}")
     private String locPath;
@@ -35,6 +41,11 @@ public class MapEditController
     @Autowired
     private LocationService locationService;
 
+    /**
+     * @description search for customized location information related to a map and send to front
+     * @param mapId: Map id string
+     * @return location information in json format
+     */
     @RequestMapping("/mapEdit/getLocationItems")
     public String locationItemsRequestHandler(@RequestParam("mapId") String mapId) {
         JSONArray locSet = new JSONArray();
@@ -53,6 +64,13 @@ public class MapEditController
         return gson.toJson(locSet);
     }
 
+    /**
+     * @description Get location description media and save in local
+     * @param file: Media file uploaded by users
+     * @return Saving successfully or failed message
+     * @throws IllegalStateException
+     * @throws IOException
+     */
     @PostMapping("/saveVideo")
     @ResponseBody
     public String saveVideoHandler(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
@@ -61,6 +79,11 @@ public class MapEditController
         return gson.toJson(msg);
     }
 
+    /**
+     * @description Searching for the location description file path, reading media file and send to front
+     * @param path: Location description file position in local
+     * @param response: Http Servlet Response
+     */
     @RequestMapping(value = "/showVideo", method = RequestMethod.GET)
     @ResponseBody
     public void getVideoHandler(@RequestParam("loc_file_path") String path, HttpServletResponse response) {
@@ -79,11 +102,11 @@ public class MapEditController
     }
 
     /**
-     * @param itemInfo should include two files: mapId and locationName, location coordinate X and Y
-     * @param media include one video or one image
-     * @return
+     * @description Searching for all the media files related to a certain map
+     * @param itemInfo Including two files: mapId and locationName, location coordinate X and Y
+     * @param media: Description file including one video or one image
+     * @return Responding message
      */
-
     @RequestMapping("/mapEdit/addLocation")
     @ResponseBody
     public String addLocationItem(@RequestParam("itemInfo") Map<String, Object> itemInfo, @RequestParam("media") MultipartFile media) {

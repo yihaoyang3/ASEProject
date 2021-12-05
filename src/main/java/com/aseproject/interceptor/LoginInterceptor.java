@@ -6,6 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * @classname LoginInterceptor
+ * @description Intercepting map uploading request, checking user is logged in or not before do any customized operations. If not, redirecting to login page
+ * @author Yicheng Lu
+ * @date Dec 5th, 2021
+ */
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Override

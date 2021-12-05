@@ -6,27 +6,41 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.*;
 
+/**
+ * @classname MapDao
+ * @description Database operations related to maps
+ * @author Yuchen Shen
+ * @date Dec 5th, 2021
+ */
 @Repository
 public class MapDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    /* Basic Operations */
-    // insert
+    /**
+     * @description Adding map into database
+     * @param info: Map DTO
+     */
     public void addMap(MapInfo info) {
         String sql = "insert into map_storage_info(map_id, map_name) values (?,?)";
         jdbcTemplate.update(sql, info.getMapId(), info.getMapName());
     }
 
-    // delete
+    /**
+     * @description Deleting map from database by map unique id
+     * @param mapId: Map unique id string
+     */
     public void delMap(String mapId) {
         String sql = "delete from map_storage_info where map_id = ?";
         jdbcTemplate.update(sql, mapId);
     }
 
-    /* Search */
-    // by name
+    /**
+     * @description Searching for maps by user customized name
+     * @param query: User customized name string
+     * @return Set of map DTO
+     */
     public List<HashMap<String, String>> getMapByName(String query) {
         List<HashMap<String, String>> mapSet = new LinkedList<>();
 
@@ -58,6 +72,10 @@ public class MapDao {
 //        return storagePath;
 //    }
 
+    /**
+     * @description Get a list of all maps stored in database
+     * @return List of all map DTO
+     */
     public List<Map<String, String>> getAllMaps() {
         List<Map <String, String>> mapSet =  new LinkedList<>();
 

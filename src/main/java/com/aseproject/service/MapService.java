@@ -21,6 +21,12 @@ import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @classname MapService
+ * @description Other operations related to map editing
+ * @author Yicheng Lu, Jitong Yang, Yuchen Shen
+ * @date Dec 5th, 2021
+ */
 @Service
 public class MapService {
 
@@ -30,6 +36,11 @@ public class MapService {
     @Autowired
     private MapDao mapDao;
 
+    /**
+     * @description Processing map image
+     * @param originalMap: Map image
+     * @return Processed map image
+     */
     public String[][] processUploadedMap(BufferedImage originalMap) throws InterruptedException {
         String[][] mapBlock = null;
 
@@ -77,6 +88,10 @@ public class MapService {
         return mapBlock;
     }
 
+    /**
+     * @description Saving map in local in json file
+     * @param mapBlock: Map storage format
+     */
     public void storeMapInLocal(String[][] mapBlock)  {
         try {
             // write blocks information in local json file
@@ -120,6 +135,11 @@ public class MapService {
         }
     }
 
+    /**
+     * @description Reading map from local file
+     * @param mapID: Map unique id string
+     * @return Map storage format
+     */
     public String[][] readMapFromLocal(String mapID) {
         String[][] map = new String[0][];
         try {

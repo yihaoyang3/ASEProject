@@ -6,6 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * @classname SessionInterceptor
+ * @description Checking each front webpage has a session or not. If not, create session
+ * @author Yihao Yang
+ * @date Dec 5th, 2021
+ */
 public class SessionInterceptor implements HandlerInterceptor
 {
     @Override
