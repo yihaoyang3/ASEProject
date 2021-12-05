@@ -1,15 +1,23 @@
 package com.aseproject.domain;
 
+//import java.util.ArrayList;
+
 public class LocationInfo {
 
+    private String locationId;
     private String mapId;
     private String locationName;
-    private String locationDescriptionFileName;
-    private String locationDescriptionFilePath;
-    private int locationCoordinateX;
-    private int locationCoordinateY;
-    private String locationId;
+//    private ArrayList<String> DescriptionFileList;
+    private String DescriptionFile;
+    private int coordinateX;
+    private int coordinateY;
 
+    // location id
+    public String getLocationId() { return locationId; }
+
+    public void setLocationId(String locationId) { this.locationId = locationId; }
+
+    // map id
     public String getMapId()
     {
         return mapId;
@@ -20,6 +28,7 @@ public class LocationInfo {
         this.mapId = mapId;
     }
 
+    // location name
     public String getLocationName()
     {
         return locationName;
@@ -30,54 +39,38 @@ public class LocationInfo {
         this.locationName = locationName;
     }
 
-    public String getLocationDescriptionFileName()
-    {
-        return locationDescriptionFileName;
-    }
+    // description file
+    public String getDescriptionFile() { return this.DescriptionFile; }
 
-    public void setLocationDescriptionFileName(String locationDescriptionFileName)
-    {
-        this.locationDescriptionFileName = locationDescriptionFileName;
-    }
+    public void setDescriptionFile(String fileName) { this.DescriptionFile = fileName; }
 
-    public String getLocationDescriptionFilePath()
-    {
-        return locationDescriptionFilePath;
-    }
+//    // description files
+//    public ArrayList<String> getDescriptionFileList()
+//    {
+//        return this.DescriptionFileList;
+//    }
+//
+//    public String addLocationDescriptionFile(String newFile) {
+//        this.DescriptionFileList.add(newFile);
+//        return "Add file successfully";
+//    }
+//
+//    public String delLocationDescriptionFile(String fileName) {
+//        if(this.DescriptionFileList.contains(fileName)) {
+//            this.DescriptionFileList.remove(fileName);
+//            return "Removal successfully";
+//        } else {
+//            return "No such File";
+//        }
+//    }
 
-    public void setLocationDescriptionFilePath(String locationDescriptionFilePath)
-    {
-        this.locationDescriptionFilePath = locationDescriptionFilePath;
-    }
+    // coordinates
+    public int getX() { return coordinateX; }
 
-    public int getLocationCoordinateX()
-    {
-        return locationCoordinateX;
-    }
+    public void setX(int x) { this.coordinateX = x; }
 
-    public void setLocationCoordinateX(int locationCoordinateX)
-    {
-        this.locationCoordinateX = locationCoordinateX;
-    }
+    public int getY() { return coordinateY; }
 
-    public int getLocationCoordinateY()
-    {
-        return locationCoordinateY;
-    }
-
-    public void setLocationCoordinateY(int locationCoordinateY)
-    {
-        this.locationCoordinateY = locationCoordinateY;
-    }
-
-    public String getLocationId()
-    {
-        return locationId;
-    }
-
-    public void setLocationId(String locationId)
-    {
-        this.locationId = locationId;
-    }
+    public void setY(int y) { this.coordinateY = y; }
 }
 

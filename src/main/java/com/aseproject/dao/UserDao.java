@@ -1,36 +1,61 @@
 package com.aseproject.dao;
 
-import com.aseproject.domain.User;
+import com.aseproject.domain.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
-
 @Repository
-public class UserDao
-{
-    private JdbcTemplate jdbcTemplate;
+public class UserDao {
 
     @Autowired
-    public void init(DataSource dataSource)
-    {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+    private JdbcTemplate jdbcTemplate;
 
-    public User checkLogin(User checkedUser)
-    {
-        User userInfoInDb = new User();
-        String sqlStr = "select password, user_id,user_account_name from user where user_name = ?";
-        jdbcTemplate.query(sqlStr, new Object[]{checkedUser.getUserName()}, resultSet -> {
-            userInfoInDb.setUserId(resultSet.getString("user_id"));
-            userInfoInDb.setPassword(resultSet.getString("password"));
-            userInfoInDb.setUserAccountName(resultSet.getString("user_account_name"));
+//    @Autowired
+//    public void init(DataSource dataSource) {
+//        this.jdbcTemplate = new JdbcTemplate(dataSource);
+//    }
+
+    /* Login */
+    // check user's existence when login
+    public UserInfo checkLogin(UserInfo checkedUser) {
+        UserInfo userInfo = new UserInfo();
+        String sql = "select * from user where account_name = ?";
+        jdbcTemplate.query(sql, new Object[]{checkedUser.getAccountName()}, resultSet -> {
+            userInfo.setUserId(resultSet.getString("user_id"));
+            userInfo.setPassword(resultSet.getString("password"));
+            userInfo.setAccountName(resultSet.getString("account_name"));
+            userInfo.setEmail(resultSet.getString(("email")));
         });
-        if (!checkedUser.getPassword().equals(userInfoInDb.getPassword()))
-        {
+        if (!checkedUser.getPassword().equals(userInfo.getPassword())) {
             return null;
         }
-        return userInfoInDb;
+        return userInfo;
+    }
+
+    /* Register */
+    //  check whether user's name is occupied when registering
+    public boolean checkUserExist(String userEmail) {
+        String sql = "select count(email) from user where email = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, userEmail);
+        return !(count >= 1);
+    }
+
+    // register
+    public void registerNewUser(String userId, String accountName, String userEmail, String password) {
+        String sql = "insert into user (user_id, account_name, email, password) values (?,?,?,?);";
+        jdbcTemplate.update(sql, userId, accountName, userEmail, password);
+    }
+
+    /* Other operations */
+    public void modifyPassword(String userId, String newPassword) {
+        String sql = "update user set password = ? where user_id = ?";
+        jdbcTemplate.update(sql, newPassword, userId);
+    }
+
+    public boolean checkOldPassword(String userId, String oldPassword) {
+        String sql = "select count(password) from user where user_id = ? and password = ? and is_admin = ?";
+        int count = jdbcTemplate.queryForObject(sql, new Object[]{userId, oldPassword,false}, Integer.class);
+        return count == 1;
     }
 }

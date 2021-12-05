@@ -1,71 +1,107 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>display</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap-4.3.1.min.css}">
-    <link rel="stylesheet" th:href="@{/css/project/mapbrowse.css}">
+    <link rel="stylesheet" th:herf="@{/css/bootstrap/bootstrap.css}">
+    <link rel="stylesheet" th:herf="@{/css/util/mapdisplay.css}">
 </head>
 <body>
 
-<div class="buttoms">
+<!--Zoom-in & Zoom-out button set-->
+<div class="bottoms">
     <div style="position: absolute; right: 20px; bottom:20px; z-index: 999">
-        <button onclick="zoombig()">Zoom-In</button>
+        <button onclick="zoombig()">
+            <img src="/icon/zoom-in.svg" alt="zoom-in" width="32" height="32">
+        </button>
         &nbsp;&nbsp;
-        <button onclick="zoomsmall()">Zoom-Out</button>
+        <button onclick="zoomsmall()">
+            <img src="/icon/zoom-out.svg" alt="zoom-out" width="32" height="32">
+        </button>
         &nbsp;&nbsp;
-        <button onclick="getDefault()">Reset</button>
+        <button onclick="getDefault()">
+            <img src="/icon/bootstrap-reboot.svg" alt="reset" width="32" height="32">
+        </button>
     </div>
 </div>
 
-<!--<div class="bg-modal" id="popup-on-mapblock-selected">
-    <div class="modal-content" id="modal_container">
-        <div class="close">+</div>
-        <form action="">
-            <input type="text" name= "Location Name" placeholder="Location Name">
-            <input type="text" name= "LocationDescription" placeholder="Location Description">
-            <input type="file" accept= "image/*,video/*">
-            <a href="" class="SaveLocationInformation">Save</a>
-        </form>
-    </div>
-</div>-->
-
-<!--<div class="visible-cover relative">
-    <div style="width: 100%; height: auto; position: absolute; left: 0; top: 0; z-index: 0;" id="vis">
-        <div th:each="row:${mapBlocks}" style="display: flex; flex-wrap: nowrap;height: auto">
-            <div th:each="col:${row}" style="height: auto">
-                <img style="width: 100%; height: auto" th:src="'data:image/jpeg;base64,'+${col}" name="map-block" class="block" th:draggable="false">
+<!--popup window-->
+<div class="modal fade" id="popup-on-mapblock-selected" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="container">
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col text-center">
+                                <label id="popupmapIdLabel" hidden="hidden" th:value="${mapId}"></label>
+                                <input type="text" class="form-control" name= "LocationName" id="LocationName" placeholder="Location Name">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col">
+                                <input id="LocationDescriptionMedia" name= "LocationDescriptionMedia"  type="file" accept= "image/*,video/*" multiple><br>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-primary SaveLocationInformation" id="SaveLocationInformation">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>-->
+</div>
 
+<!--display map-->
 <div class="visible-cover relative">
     <div class="drag-framework-inner" id="vis">
-        <div id="map-container" class="map-framework">
-
-        </div>
+        <div id="map-container" class="map-framework"></div>
     </div>
 </div>
 <label id="mapIdLabel" hidden="hidden" th:value="${mapId}"></label>
-</body>
-<style type="text/css">
-    .visible-cover{
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-        border:2px solid #000;
-        float:left;
-        margin-right:20px;
-    }
-    .relative{
-        position: relative;
-    }
-</style>
 
-<script th:src="@{/js/jquery/jquery-3.3.1.js}"></script>
+</body>
+
+<script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery/jquery-3.6.0.min.js}"></script>
 <script th:src="@{/js/map/mapbrowse.js}"></script>
 <script type="text/javascript">
+
+    $(".SaveLocationInformation").click(function() {
+        var formData= new FormData();
+        debugger;
+        let itemMap = new Map();
+        itemMap.set('mapId', $("#mapIdLabel").attr("value"));
+        itemMap.set('locationName', document.getElementById("LocationName").value);
+        //var itemData = {mapId:$("#mapIdLabel").attr("value"),
+        //                locationName:document.getElementById("LocationName").value};
+        let fileblob=new Blob([document.getElementById('LocationDescriptionMedia').files[0]],{type:'jpg'});
+        formData = {
+                    'itemInfo': itemMap,
+                    'media': [fileblob]
+                    };
+        $.ajax({url: "/mapEdit/addLocation?itemInfo=${itemMap}&media=${fileblob}",
+                type: 'POST',
+                dataType: 'json',
+                processData: false,
+                data: formData,
+                success: function(result) {
+                    console.log('click')
+                    console.log(result);
+                },
+                error: function(result) {
+                    alert("error in saving location information");
+                }
+        });
+    });
 
     $(function () {
         let mapId = $("#mapIdLabel").attr("value");
@@ -80,7 +116,7 @@
                     let rowDiv = '<div class="map-row" id="' + 'row' + i + '"></div>'
                     $(rowDiv).appendTo("#map-container");
                     for (let j = 0; j < data[i].length; j++) {
-                        let mapBlock = '<img name="map-block" class="block" draggable="false" src="' + imgType +
+                        let mapBlock = '<img name="map-block" class="block" data-toggle="modal" data-target="#popup-on-mapblock-selected" draggable="false" src="' + imgType +
                             data[i][j] +
                             '">';
                         $(mapBlock).appendTo(rowId);
@@ -101,18 +137,9 @@
         this.style.borderColor = "";
     });
 
-/*    $('.map-block-selected').on('click', function() {
+    $('.map-block-selected').on('click', function() {
     $('#popup-on-mapblock-selected').toggle();
     })
 
-    $(".SaveLocationInformation").click(function() {
-                $.ajax({url: "/mapEdit/addLocation",
-                        success: function(result) {
-                    alert("location information saved");
-                },
-                error: function(result) {
-                    alert("error in saving location information");
-                }});
-            });*/
 </script>
 </html>

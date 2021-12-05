@@ -2,7 +2,7 @@ package com.aseproject.controller;
 
 import com.aseproject.customexception.UserNameExisted;
 import com.aseproject.dao.UserDao;
-import com.aseproject.domain.User;
+import com.aseproject.domain.UserInfo;
 import com.aseproject.service.RegisterService;
 import com.aseproject.util.ValidityCodeUtil;
 import com.google.code.kaptcha.Constants;
@@ -26,7 +26,7 @@ import java.util.Map;
 public class LoginController
 {
     @Autowired
-    private RegisterService service;
+    private RegisterService registerService;
 
     @Autowired
     private UserDao userDao;
@@ -37,13 +37,13 @@ public class LoginController
     @RequestMapping("/login")
     public String login()
     {
-        return "/account/login";
+        return "/login";
     }
 
     @RequestMapping("/register")
     public String entrance()
     {
-        return "/account/register";
+        return "/register";
     }
 
     @RequestMapping("/getValidityCode")
@@ -73,42 +73,33 @@ public class LoginController
     }
 
     @RequestMapping("/checkin")
-    public String login(HttpServletRequest request, HttpServletResponse response, User user,
-                        RedirectAttributes attributes)
-    {
+    public String login(HttpServletRequest request, HttpServletResponse response, RedirectAttributes attributes, UserInfo uncheckedUser) {
         int mark = 0;
-        try
-        {
-            if (ValidityCodeUtil.validating(request))
-            {
-                user = userDao.checkLogin(user);
-                if (user == null)
-                {
+        try {
+            if (ValidityCodeUtil.validating(request)) {
+                UserInfo user = userDao.checkLogin(uncheckedUser);
+                if (user == null) {
                     attributes.addFlashAttribute("successCode", 0);
                     attributes.addFlashAttribute("errorInfo", "Account/Password not matched");
-                } else
-                {
+                } else {
                     HttpSession session = request.getSession();
                     session.setAttribute("isLoggedIn", true);
-                    session.setAttribute("userAccountName", user.getUserAccountName());
                     session.setAttribute("userId", user.getUserId());
-                    session.setAttribute("userName", user.getUserName());
+                    session.setAttribute("accountName", user.getAccountName());
+                    session.setAttribute("userEmail", user.getEmail());
 
-                    Cookie[] cookies = new Cookie[]{new Cookie("userAccountName", user.getUserAccountName()),
-                            new Cookie("userName", user.getUserName()), new Cookie("userId", user.getUserId())};
-                    for (Cookie cookie : cookies)
-                    {
+                    Cookie[] cookies = new Cookie[]{new Cookie("UserEmail", user.getEmail()),
+                            new Cookie("AccountName", user.getAccountName()), new Cookie("UserId", user.getUserId())};
+                    for (Cookie cookie : cookies) {
                         response.addCookie(cookie);
                     }
                     mark = 1;
                 }
-            } else
-            {
+            } else {
                 attributes.addFlashAttribute("successCode", 0);
                 attributes.addFlashAttribute("errorInfo", "Verification not matched");
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return mark == 0 ? "redirect:/login" : "redirect:/";
@@ -120,28 +111,24 @@ public class LoginController
         boolean success = false;
         try
         {
-            if (ValidityCodeUtil.validating(request))
-            {
-                String userId = service.registerNewUser((String) param.get("userName"), (String) param.get("userAccountName"),
-                        (String) param.get("password"));
+            if (ValidityCodeUtil.validating(request)) {
+                String userId = registerService.registerNewUser((String) param.get("userEmail"), (String) param.get("accountName"),
+                        (String) param.get("userPassword"));
                 HttpSession session = request.getSession();
                 session.setAttribute("idLoggedIn", true);
-                session.setAttribute("userAccountName", param.get("userAccountName"));
                 session.setAttribute("userId", userId);
-                session.setAttribute("userName", param.get("userName"));
+                session.setAttribute("accountName", param.get("accountName"));
+                session.setAttribute("userEmail", param.get("userEmail"));
                 success = true;
-            } else
-            {
+            } else {
                 model.addFlashAttribute("statusCode", 0);
                 model.addFlashAttribute("statusInfo", "Verification code doesn't match");
             }
-        } catch (UserNameExisted e)
-        {
+        } catch (UserNameExisted e) {
             model.addFlashAttribute("statusCode", 0);
             model.addFlashAttribute("statusInfo", "User name existed");
             e.printStackTrace();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             model.addFlashAttribute("statusCode", 0);
             model.addFlashAttribute("statusInfo", "Unknown error");
             e.printStackTrace();
