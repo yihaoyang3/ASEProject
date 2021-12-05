@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @classname MapQueryController
+ * @description Searching for map by user customized name
+ * @author Yicheng Lu
+ * @date Dec 5th, 2021
+ */
 @Controller
 public class MapQueryController {
 

@@ -15,6 +15,12 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @classname MapController
+ * @description Handling request from map upload page. Processing map image, save in local and send to MapDao to store related information into database
+ * @author Yihao Yang
+ * @date Dec 05th, 2021
+ */
 @Controller
 public class MapController {
 
@@ -24,11 +30,21 @@ public class MapController {
     @Autowired
     private MapService mapService;
 
+    /**
+     * @descirption Setting home page
+     * @return Home page url
+     */
     @RequestMapping("/")
     public String welcome() {
         return "/home";
     }
 
+    /**
+     * @description Receiving map image and processing
+     * @param mapImage: Map image
+     * @param model: Data transfer flow
+     * @return Redirecting to map display page
+     */
     @RequestMapping("/upload")
     public String uploadMap(@RequestParam("map") MultipartFile mapImage, Model model) {
         String originalName = mapImage.getOriginalFilename();
@@ -48,6 +64,10 @@ public class MapController {
         return "/mapDisplay";
     }
 
+    /**
+     * @description Reading all maps from database
+     * @return String of all map id
+     */
     @RequestMapping("/plazaHomepage")
     @ResponseBody
     public String requestMapList() {
@@ -56,12 +76,23 @@ public class MapController {
         return mapIds;
     }
 
+    /**
+     * @description Searching for maps according to map id
+     * @param id: Map id string
+     * @param model: Data transfer flow
+     * @return Home url
+     */
     @RequestMapping("/map/browse")
     public String browseMap(@RequestParam("id") String id, Model model) {
         model.addAttribute("mapId",id);
         return "/homepage";
     }
 
+    /**
+     * @description Reading map local storage json file according to map id
+     * @param id: Map id string
+     * @return map data in json format
+     */
     @RequestMapping("/map/browse/getMap")
     @ResponseBody
     public String getMapInJson(@RequestParam("id") String id) {
