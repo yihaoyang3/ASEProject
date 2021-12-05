@@ -20,7 +20,11 @@ The basic structure of the project is:
 
 &emsp;&emsp;&emsp;&emsp;&emsp;|--dao
 
-&emsp;&emsp;&emsp;&emsp;&emsp;|--(others packages)
+&emsp;&emsp;&emsp;&emsp;&emsp;|--util
+
+&emsp;&emsp;&emsp;&emsp;&emsp;|--interceptor
+
+&emsp;&emsp;&emsp;&emsp;&emsp;|--customexception
 
 &emsp;&emsp;|--resource
 
