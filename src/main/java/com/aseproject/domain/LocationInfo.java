@@ -3,17 +3,14 @@ package com.aseproject.domain;
 //import java.util.ArrayList;
 
 /**
- * @classname LocationInfo
- * @description Location DTO
+ * Location DTO
  * @author Yuchen Shen
- * @date Dec 5th, 2021
  */
 public class LocationInfo {
 
     private String locationId;
     private String mapId;
     private String locationName;
-//    private ArrayList<String> DescriptionFileList;
     private String DescriptionFile;
     private int coordinateX;
     private int coordinateY;
@@ -49,26 +46,6 @@ public class LocationInfo {
     public String getDescriptionFile() { return this.DescriptionFile; }
 
     public void setDescriptionFile(String fileName) { this.DescriptionFile = fileName; }
-
-//    // description files
-//    public ArrayList<String> getDescriptionFileList()
-//    {
-//        return this.DescriptionFileList;
-//    }
-//
-//    public String addLocationDescriptionFile(String newFile) {
-//        this.DescriptionFileList.add(newFile);
-//        return "Add file successfully";
-//    }
-//
-//    public String delLocationDescriptionFile(String fileName) {
-//        if(this.DescriptionFileList.contains(fileName)) {
-//            this.DescriptionFileList.remove(fileName);
-//            return "Removal successfully";
-//        } else {
-//            return "No such File";
-//        }
-//    }
 
     // coordinates
     public int getX() { return coordinateX; }

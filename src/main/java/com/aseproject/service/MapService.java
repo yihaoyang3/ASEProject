@@ -22,10 +22,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @classname MapService
- * @description Other operations related to map editing
+ * Other operations related to map editing
  * @author Yicheng Lu, Jitong Yang, Yuchen Shen
- * @date Dec 5th, 2021
  */
 @Service
 public class MapService {
@@ -37,8 +35,8 @@ public class MapService {
     private MapDao mapDao;
 
     /**
-     * @description Processing map image
-     * @param originalMap: Map image
+     * Processing map image
+     * @param originalMap Map image
      * @return Processed map image
      */
     public String[][] processUploadedMap(BufferedImage originalMap) throws InterruptedException {
@@ -53,9 +51,6 @@ public class MapService {
         MapCutter.setTotalRow(totalRow);
         MapCutter.setCounter(new Counter());
         MapCutter.setQueue(new LinkedBlockingQueue<>());
-        /*MapCutter m = new MapCutter();
-        Thread mapCutter = new Thread(m);
-        mapCutter.start();*/
         for (int i = 0; i < 3; i++)
         {
             Thread mapCutter = new Thread(new MapCutter());
@@ -89,8 +84,8 @@ public class MapService {
     }
 
     /**
-     * @description Saving map in local in json file
-     * @param mapBlock: Map storage format
+     * Saving map in local in json file
+     * @param mapBlock Map storage format
      */
     public void storeMapInLocal(String[][] mapBlock)  {
         try {
@@ -136,8 +131,8 @@ public class MapService {
     }
 
     /**
-     * @description Reading map from local file
-     * @param mapID: Map unique id string
+     * Reading map from local file
+     * @param mapID Map unique id string
      * @return Map storage format
      */
     public String[][] readMapFromLocal(String mapID) {

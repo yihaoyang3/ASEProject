@@ -1,10 +1,8 @@
 package com.aseproject.domain;
 
 /**
- * @classname MapInfo
- * @description Map DTO
+ * Map DTO
  * @author Jitong Yang
- * @date Dec 5th, 2021
  */
 public class MapInfo {
 

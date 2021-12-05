@@ -9,10 +9,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @classname LocationService
- * @description Other operations related to customizd location
+ * Other operations related to customizd location
  * @author Yicheng Lu
- * @date Dec 5th, 2021
  */
 @Service
 public class LocationService {
@@ -21,8 +19,8 @@ public class LocationService {
     private String path;
 
     /**
-     * @description Saving customized media file in local
-     * @param file: Media file
+     * Saving customized media file in local
+     * @param file Media file
      * @return Message related to storage is successful or not
      */
     public String saveLocVideo(MultipartFile file) throws IOException {

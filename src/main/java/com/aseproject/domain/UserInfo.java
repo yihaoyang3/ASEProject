@@ -3,10 +3,8 @@ package com.aseproject.domain;
 import java.io.Serializable;
 
 /**
- * @classname UserInfo
- * @description User DTO
+ * User DTO
  * @author Yuchen Shen
- * @date Dec 5th, 2021
  */
 public class UserInfo implements Serializable
 {
