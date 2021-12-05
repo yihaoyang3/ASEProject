@@ -37,8 +37,8 @@ The basic structure of the project is:
 &emsp;&emsp;&emsp;&emsp;|--templates(html or template like thymeleaf)
 
 &emsp;|--test
+
 The backend developer should follow MVC pattern.
-**Unfinished**
 ## Comments
 All the services should be placed under this package. A service provides
 Developers should provide comment for classes and methods. The comment of classes should appear before the definition of the classes. The comment should include information including the author, explain of usage of this class. For example:
