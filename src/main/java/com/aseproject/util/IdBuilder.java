@@ -2,8 +2,16 @@ package com.aseproject.util;
 
 import java.util.UUID;
 
+/**
+ * An util class for generating UUID.
+ * @author Yihao Yang
+ */
 public class IdBuilder
 {
+    /**
+     * Generating UUID in a specific format.
+     * @return 24 bits UUID
+     */
     public static String generateId()
     {
         String s = UUID.randomUUID().toString();

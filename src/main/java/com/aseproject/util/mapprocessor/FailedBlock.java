@@ -1,5 +1,9 @@
 package com.aseproject.util.mapprocessor;
 
+/**
+ * A class to record black that filed in processing.
+ * @author Yihao Yang
+ */
 public class FailedBlock
 {
     private int x,y;

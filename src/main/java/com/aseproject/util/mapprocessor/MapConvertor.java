@@ -8,6 +8,10 @@ import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * A class that convert a map block from jpg into base64 string.
+ * @author Yihao Yang
+ */
 public class MapConvertor implements Runnable
 {
     private static LinkedBlockingQueue<MapBlock> receiveQueue;
@@ -22,6 +26,12 @@ public class MapConvertor implements Runnable
         isDone = false;
     }
 
+    /**
+     * convert jpg to base64
+     * @param block map block
+     * @return base64 string
+     * @throws IOException
+     */
     public MapBlock mapToBase64(MapBlock block) throws IOException
     {
         ImageIO.write(block.getBlock(), "jpg", baos);
@@ -30,6 +40,9 @@ public class MapConvertor implements Runnable
         return block;
     }
 
+    /**
+     * Start the threads.
+     */
     @Override
     public void run()
     {
@@ -54,6 +67,10 @@ public class MapConvertor implements Runnable
         }
     }
 
+    /**
+     * init a queue to receive map block from MapCutter
+     * @param receiveQueue Same LinkedBlockingQueue object as the one used in MapCutter.
+     */
     public static void initReceiveQueue(LinkedBlockingQueue<MapBlock> receiveQueue)
     {
         if (MapConvertor.receiveQueue == null)
@@ -67,6 +84,9 @@ public class MapConvertor implements Runnable
         base64MapBlock = new String[row][col];
     }
 
+    /**
+     * reset the LinkedBlockingQueue.
+     */
     public static void resetQueues()
     {
         MapConvertor.receiveQueue = null;
@@ -77,6 +97,9 @@ public class MapConvertor implements Runnable
         return base64MapBlock;
     }
 
+    /**
+     * reset all parameters to null for the next process.
+     */
     public static void resetAll()
     {
         receiveQueue = null;

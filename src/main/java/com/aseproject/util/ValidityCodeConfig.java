@@ -7,9 +7,17 @@ import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
+/**
+ * This class provides a configuration for verification generation.
+ * @author Yihao Yang
+ */
 @Component
 public class ValidityCodeConfig
 {
+    /**
+     *
+     * @return A configuration class
+     */
     @Bean
     public DefaultKaptcha getDefaultKaptcha()
     {

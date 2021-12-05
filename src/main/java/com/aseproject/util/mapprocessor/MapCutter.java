@@ -20,6 +20,11 @@ public class MapCutter implements Runnable
     private static int totalRow, totalCol;
 
 
+    /**
+     * cut a jpg file into several blocks. Every block has fixed length and width which are 30px.
+     * @param counter a counter for judge if the process finished.
+     * @return a map block with 30px length and width.
+     */
     public MapBlock cutImage(Counter counter)
     {
         int x, y;
@@ -40,7 +45,6 @@ public class MapCutter implements Runnable
             {
                 counter.setCountY(y + 1);
             }
-//            System.out.println(Thread.currentThread().getName() + " is processing X:" + x + ", Y: " + y);
         }
         BufferedImage i = null;
         try
@@ -56,18 +60,7 @@ public class MapCutter implements Runnable
         block.setX(x);
         block.setY(y);
         return block;
-        /*synchronized (counter)
-        {
-            if (y == totalCol - 1)
-            {
-                counter.setCountX(x + 1);
-                counter.setCountY(0);
-            } else
-            {
-                counter.setCountY(y + 1);
-            }
-            return block;
-        }*/
+
     }
 
     @Override
@@ -87,7 +80,6 @@ public class MapCutter implements Runnable
                 }
             } else
             {
-//                System.out.println("Finish processing, thread quit");
                 return;
             }
         }
