@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 /**
  * A class to describe every map block. The x and y represent where a block located in a map. stringBlock represents the
  * base64 map data.
- * @autho Yihao Yang
+ * @author  Yihao Yang
  */
 public class MapBlock
 {
