@@ -1,11 +1,11 @@
 $('#submitForm').click(function () {
     if ($('#registerInfo').validate({
         rules: {
-            userName: {
+            userEmail: {
                 required: true,
                 email: true
             },
-            userAccountName: {
+            accountName: {
                 required: true,
                 minlength: 4,
                 maxlength: 12
@@ -15,7 +15,7 @@ $('#submitForm').click(function () {
                 minlength: 8,
                 maxlength: 16
             },
-            userPasswordConfirm: {
+            PasswordConfirm: {
                 required: true,
                 minlength: 8,
                 maxlength: 16,
@@ -25,7 +25,7 @@ $('#submitForm').click(function () {
             validityCode: 'required'
         },
         messages: {
-            userPasswordConfirm: {
+            passwordConfirm: {
                 equalTo: 'Passwords do not match'
             }
         },

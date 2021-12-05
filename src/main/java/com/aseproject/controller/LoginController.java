@@ -73,11 +73,11 @@ public class LoginController
     }
 
     @RequestMapping("/checkin")
-    public String login(HttpServletRequest request, HttpServletResponse response, RedirectAttributes attributes, UserInfo user) {
+    public String login(HttpServletRequest request, HttpServletResponse response, RedirectAttributes attributes, UserInfo uncheckedUser) {
         int mark = 0;
         try {
             if (ValidityCodeUtil.validating(request)) {
-                user = userDao.checkLogin(user);
+                UserInfo user = userDao.checkLogin(uncheckedUser);
                 if (user == null) {
                     attributes.addFlashAttribute("successCode", 0);
                     attributes.addFlashAttribute("errorInfo", "Account/Password not matched");
@@ -113,7 +113,7 @@ public class LoginController
         {
             if (ValidityCodeUtil.validating(request)) {
                 String userId = registerService.registerNewUser((String) param.get("userEmail"), (String) param.get("accountName"),
-                        (String) param.get("password"));
+                        (String) param.get("userPassword"));
                 HttpSession session = request.getSession();
                 session.setAttribute("idLoggedIn", true);
                 session.setAttribute("userId", userId);
