@@ -73,21 +73,15 @@ public class LoginController
     }
 
     @RequestMapping("/checkin")
-    public String login(HttpServletRequest request, HttpServletResponse response, UserInfo user,
-                        RedirectAttributes attributes)
-    {
+    public String login(HttpServletRequest request, HttpServletResponse response, RedirectAttributes attributes, UserInfo user) {
         int mark = 0;
-        try
-        {
-            if (ValidityCodeUtil.validating(request))
-            {
+        try {
+            if (ValidityCodeUtil.validating(request)) {
                 user = userDao.checkLogin(user);
-                if (user == null)
-                {
+                if (user == null) {
                     attributes.addFlashAttribute("successCode", 0);
                     attributes.addFlashAttribute("errorInfo", "Account/Password not matched");
-                } else
-                {
+                } else {
                     HttpSession session = request.getSession();
                     session.setAttribute("isLoggedIn", true);
                     session.setAttribute("userId", user.getUserId());
@@ -96,19 +90,16 @@ public class LoginController
 
                     Cookie[] cookies = new Cookie[]{new Cookie("UserEmail", user.getEmail()),
                             new Cookie("AccountName", user.getAccountName()), new Cookie("UserId", user.getUserId())};
-                    for (Cookie cookie : cookies)
-                    {
+                    for (Cookie cookie : cookies) {
                         response.addCookie(cookie);
                     }
                     mark = 1;
                 }
-            } else
-            {
+            } else {
                 attributes.addFlashAttribute("successCode", 0);
                 attributes.addFlashAttribute("errorInfo", "Verification not matched");
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return mark == 0 ? "redirect:/login" : "redirect:/";

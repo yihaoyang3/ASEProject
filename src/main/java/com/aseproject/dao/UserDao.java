@@ -20,12 +20,12 @@ public class UserDao {
     // check user's existence when login
     public UserInfo checkLogin(UserInfo checkedUser) {
         UserInfo userInfo = new UserInfo();
-        String sql = "select user_id, account_name, password from user where email = ?";
-        jdbcTemplate.query(sql, new Object[]{checkedUser.getEmail()}, resultSet -> {
+        String sql = "select * from user where account_name = ?";
+        jdbcTemplate.query(sql, new Object[]{checkedUser.getAccountName()}, resultSet -> {
             userInfo.setUserId(resultSet.getString("user_id"));
             userInfo.setPassword(resultSet.getString("password"));
             userInfo.setAccountName(resultSet.getString("account_name"));
-
+            userInfo.setEmail(resultSet.getString(("email")));
         });
         if (!checkedUser.getPassword().equals(userInfo.getPassword())) {
             return null;
