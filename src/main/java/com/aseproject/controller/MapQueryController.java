@@ -13,22 +13,28 @@ import java.util.HashMap;
 import java.util.List;
 
 @Controller
-public class MapQueryController {
+public class  MapQueryController {
 
     @Autowired
-    private MapDao mapDao;
+    private  MapDao  mapDao;
 
-    @RequestMapping("/map/query")
-    public String mapQuery(@RequestParam("keywords") String keywords) {
-        JSONArray mapList = new JSONArray();
-        List<HashMap<String, String>> mapSet = mapDao.queryMapByName(keywords);
-        for (HashMap<String, String> row : mapSet) {
+    @RequestMapping( "/map/query")
+    public String mapQuery( @RequestParam("keywords") String keywords)
+    {
+        JSONArray  mapList =  new JSONArray();
+        List<HashMap <String, String>> mapSet = mapDao.queryMapByName(keywords);
+        for (HashMap <String, String> row : mapSet)
+
+        {
             JSONObject obj = new JSONObject();
-            obj.put("mapID", row.get("mapID"));
-            obj.put("mapName", row.get("mapName"));
-            mapList.add(obj);
+            obj.put("mapID");
+            obj.put( " mapID", row.get( " mapID"));
+            obj.put( " mapName", row.get( " mapName"));
+            mapList.add( obj);
         }
+
         Gson gson = new Gson();
-        return gson.toJson(mapList);
+
+        return gson.toJson( mapList);
     }
 }
