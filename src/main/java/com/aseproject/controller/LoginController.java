@@ -26,7 +26,7 @@ import java.util.Map;
 public class LoginController
 {
     @Autowired
-    private RegisterService service;
+    private RegisterService registerService;
 
     @Autowired
     private UserDao userDao;
@@ -121,7 +121,7 @@ public class LoginController
         try
         {
             if (ValidityCodeUtil.validating(request)) {
-                String userId = service.registerNewUser((String) param.get("userEmail"), (String) param.get("accountName"),
+                String userId = registerService.registerNewUser((String) param.get("userEmail"), (String) param.get("accountName"),
                         (String) param.get("password"));
                 HttpSession session = request.getSession();
                 session.setAttribute("idLoggedIn", true);

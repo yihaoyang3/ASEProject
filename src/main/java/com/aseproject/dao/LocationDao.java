@@ -12,24 +12,24 @@ import java.util.Map;
 @Repository
 public class LocationDao {
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     public void addLocInfoById(LocationInfo locationInfo){
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "insert into aseproject.location_info(location_id, map_id, location_name, coordinate_x, coordinate_y, location_description_file_name) " +
+        String sql = "insert into location_info(location_id, map_id, location_name, coordinate_x, coordinate_y, location_description_file_name) " +
                 "values (?,?,?,?,?,?)";
         jdbcTemplate.update(sql, locationInfo.getLocationId(), locationInfo.getMapId(), locationInfo.getLocationName(),
                 locationInfo.getX(), locationInfo.getY(), locationInfo.getDescriptionFile());
     }
 
     public void deleteLocInfoById(String locationId){
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "delete from aseproject.location_info where location_id = ?";
+        String sql = "delete from location_info where location_id = ?";
         jdbcTemplate.update(sql, locationId);
     }
 
     public ArrayList<LocationInfo> getLocByMapId(String mapid) {
         ArrayList<LocationInfo> locList = new ArrayList<>();
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "SELECT * FROM aseproject.location_info WHERE map_id = " + mapid;
+        String sql = "SELECT * FROM location_info WHERE map_id = " + mapid;
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
         for (Map row : rows) {
             LocationInfo obj = new LocationInfo();

@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,9 @@ public class MapService {
 
     @Value("${project.map.path}")
     private String mapPath;
+
+    @Autowired
+    private MapDao mapDao;
 
     public String[][] processUploadedMap(BufferedImage originalMap) throws InterruptedException {
         String[][] mapBlock = null;
@@ -106,7 +110,6 @@ public class MapService {
             writer.close();
 
             // write map information into database
-            MapDao mapDao = new MapDao();
             MapInfo mapInfo = new MapInfo();
             mapInfo.setMapId(uuid.toString());
             mapInfo.setMapName(fileName);

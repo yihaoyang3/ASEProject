@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,10 +29,15 @@ public class MapEditController
     @Value("${project.location.path}")
     private String locPath;
 
+    @Autowired
+    private LocationDao locationDao;
+
+    @Autowired
+    private LocationService locationService;
+
     @RequestMapping("/mapEdit/getLocationItems")
     public String locationItemsRequestHandler(@RequestParam("mapId") String mapId) {
         JSONArray locSet = new JSONArray();
-        LocationDao locationDao = new LocationDao();
         ArrayList<LocationInfo> locList = locationDao.getLocByMapId(mapId);
         for (LocationInfo loc : locList)
         {
@@ -50,7 +56,6 @@ public class MapEditController
     @PostMapping("/saveVideo")
     @ResponseBody
     public String saveVideoHandler(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
-        LocationService locationService = new LocationService();
         String msg = locationService.saveLocVideo(file);
         Gson gson = new Gson();
         return gson.toJson(msg);

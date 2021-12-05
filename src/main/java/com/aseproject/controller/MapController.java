@@ -3,6 +3,7 @@ package com.aseproject.controller;
 import com.aseproject.dao.MapDao;
 import com.aseproject.service.MapService;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,12 @@ import java.io.IOException;
 
 @Controller
 public class MapController {
+
+    @Autowired
+    private MapDao mapDao;
+
+    @Autowired
+    private MapService mapService;
 
     @RequestMapping("/")
     public String welcome() {
@@ -45,7 +52,6 @@ public class MapController {
     @ResponseBody
     public String requestMapList() {
         Gson gson = new Gson();
-        MapDao mapDao = new MapDao();
         String mapIds = gson.toJson(mapDao.getAllMaps());
         return mapIds;
     }
@@ -59,7 +65,6 @@ public class MapController {
     @RequestMapping("/map/browse/getMap")
     @ResponseBody
     public String getMapInJson(@RequestParam("id") String id) {
-        MapService mapService = new MapService();
         String[][] mapBlock = mapService.readMapFromLocal(id);
         Gson gson = new Gson();
         String mapData = gson.toJson(mapBlock);
